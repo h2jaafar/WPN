@@ -1,4 +1,5 @@
-from pandas.tests.extension.numpy_.test_numpy_nested import np
+import pandas
+import numpy as np
 from sklearn import metrics
 from io import StringIO
 import random
