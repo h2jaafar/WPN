@@ -772,6 +772,7 @@ class Generator:
         generator.generate_map_from_image("map14", True, 2)
         return # TODO Remove this
         """
+        generator: Generator = Generator(m.main_services)
 
         if m.main_services.settings.generator_modify:
             generator.modify_map(*m.main_services.settings.generator_modify())
