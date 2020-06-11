@@ -34,3 +34,12 @@ class MainRunner:
 
         if self.main_services.settings.clear_cache:
             self.main_services.resources.cache_dir.clear()
+
+
+#Work in progress
+    def run_multiple(self):
+        if self.main_services.settings.generator and self.main_services.settings.trainer and self.main_services.settings.analyzer:
+            Generator.main(self)
+            Trainer.main(self)
+            Analyzer.main(self)
+        # elif self.main_services.settings.load_simulator:
