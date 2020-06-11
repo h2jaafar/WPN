@@ -3,12 +3,10 @@ from typing import Tuple, Callable, Type, List, Optional, Dict, Any, Union
 from algorithms.algorithm import Algorithm
 from algorithms.basic_testing import BasicTesting
 from algorithms.configuration.maps.map import Map
-from maps import Maps
 from algorithms.lstm.LSTM_tile_by_tile import BasicLSTMModule
 from algorithms.lstm.ML_model import MLModel
 from simulator.services.debug import DebugLevel
 from structures import Size
-from algorithms.lstm.LSTM_CAE_tile_by_tile import LSTMCAEModel
 
 
 class Configuration:
@@ -41,22 +39,22 @@ class Configuration:
 
     def __init__(self) -> None:
         # Simulator settings
-        self.simulator_grid_display = True
-        self.simulator_initial_map = Maps.grid_map_labyrinth
+        self.simulator_grid_display = False
+        self.simulator_initial_map = None
         self.simulator_testing_type = None
         self.simulator_algorithm_type = None
         self.simulator_algorithm_parameters = [], {}
-        self.simulator_graphics = True
-        self.simulator_key_frame_speed = 20
-        self.simulator_key_frame_skip = 3
-        self.simulator_write_debug_level = DebugLevel.MEDIUM
-        self.simulator_window_size = Size(200, 200)
+        self.simulator_graphics = False
+        self.simulator_key_frame_speed = 0
+        self.simulator_key_frame_skip = 0
+        self.simulator_write_debug_level = DebugLevel.NONE
+        self.simulator_window_size = Size(200,200)
 
-        # Generator (The ones with none are optional)
-        self.generator = True
-        self.generator_labelling_atlases = None #["block_map_3"]
-        self.generator_nr_of_examples = 5
-        self.generator_gen_type = "block_map"
+        # Generator
+        self.generator = False
+        self.generator_labelling_atlases = []
+        self.generator_nr_of_examples = 0
+        self.generator_gen_type = ""
         self.generator_labelling_features = []
         self.generator_labelling_labels = []
         self.generator_single_labelling_features = []
@@ -68,17 +66,17 @@ class Configuration:
         self.generator_modify = None
 
         # Trainer
-        self.trainer = True
-        self.trainer_model = LSTMCAEModel
+        self.trainer = False
+        self.trainer_model = BasicLSTMModule
         self.trainer_custom_config = None
-        self.trainer_pre_process_data_only = True
-        self.trainer_bypass_and_replace_pre_processed_cache = True
+        self.trainer_pre_process_data_only = False
+        self.trainer_bypass_and_replace_pre_processed_cache = False
 
         # Custom behaviour settings
-        self.analyzer = True
+        self.analyzer = False
 
         # Simulator
-        self.load_simulator = True
+        self.load_simulator = False
 
         # Cache
         self.clear_cache = False

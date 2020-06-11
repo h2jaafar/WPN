@@ -124,7 +124,7 @@ class GUI:
         gui.__window.quit()
 
     @staticmethod
-    def __start_simulator_callback(gui):
+    def __start_simulator_callback(gui): #Setting the configuration file.
         config = Configuration()
 
         mp = gui.__maps[gui.__map_choice.get()]

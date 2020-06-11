@@ -13,7 +13,7 @@ class Resources(Directory):
     training_data_dir: TrainingDataDir
 
     def __init__(self, services: Services):
-        super().__init__(services, "src/resources", "./")
+        super().__init__(services, "resources", "./")
 
         self.model_dir = ModelDir(self._services, "algorithms", self._full_path())
         self.cache_dir = CacheDir(self._services, "cache", self._full_path())
