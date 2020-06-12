@@ -5,7 +5,7 @@ from algorithms.algorithm import Algorithm
 from algorithms.basic_testing import BasicTesting
 from algorithms.configuration.maps.map import Map
 from maps import Maps
-from algorithms.lstm.LSTM_tile_by_tile import BasicLSTMModule
+from algorithms.lstm.LSTM_tile_by_tile import BasicLSTMModule,OnlineLSTM
 from algorithms.lstm.ML_model import MLModel
 from simulator.services.debug import DebugLevel
 from analyzer.analyzer import Analyzer
@@ -105,16 +105,16 @@ gen_maps = {
 
 #Input hyperparametres here 
 #Universal
-chosen_map = 'House'
+chosen_map = 'Uniform Random Fill'
 #Simulator
 mp = maps[chosen_map] #Choose which map is required
-algo = algorithms['CAE Online LSTM'] #Choose which planner 
+algo = algorithms['A*'] #Choose which planner 
 ani = animations['Fast'] #Choose animation speed
 debug = debug['High'] #Choose debug level 
 #Generator
 gen_map = gen_maps[chosen_map] #Chooses map for generation, from maps available for generation. Same as map for simulation (Chosen map var)
-nbr_ex = 12 #Number of maps generated
-
+nbr_ex = 10 #Number of maps generated
+show_sample_map = False
 
 
 #Assign values to the config class
@@ -127,8 +127,8 @@ config.simulator_write_debug_level = debug
 
 
 #Generator
-config.generator = False
-config.generator_labelling_atlases = []
+config.generator = True
+config.generator_labelling_atlases = ['tile_by_tile_training_uniform_random_fill_10000_model']
 config.generator_nr_of_examples = nbr_ex
 config.generator_gen_type = gen_map
 config.generator_labelling_features = []
@@ -140,7 +140,7 @@ config.generator_aug_labelling_labels = []
 config.generator_aug_single_labelling_features = []
 config.generator_aug_single_labelling_labels = []
 config.generator_modify = None
-
+config.generator_show_gen_sample = show_sample_map #New parameter to show 5 samples of the generated maps
 #Trainer
 config.trainer = True
 config.trainer_model = BasicLSTMModule
@@ -151,4 +151,21 @@ config.trainer_bypass_and_replace_pre_processed_cache = False
 #Runs the modules which are loaded
 # MainRunner(config).run_multiple()
 
-MainRunner(config).run()
+MainRunner(config).run_multiple()
+
+
+#These are the possible atlas names for training?
+
+""" 
+"caelstm_section_lstm_training_block_map_10000_model",
+"caelstm_section_lstm_training_uniform_random_fill_10000_model",
+"caelstm_section_lstm_training_house_10000_model",
+"caelstm_section_lstm_training_uniform_random_fill_10000_block_map_10000_house_10000_model",
+"caelstm_section_lstm_training_uniform_random_fill_10000_block_map_10000_model",
+"tile_by_tile_training_uniform_random_fill_10000_model",
+"tile_by_tile_training_block_map_10000_model",
+"tile_by_tile_training_house_10000_model",
+"tile_by_tile_training_uniform_random_fill_10000_block_map_10000_model",
+"tile_by_tile_training_uniform_random_fill_10000_block_map_10000_house_10000_model", 
+"""
+

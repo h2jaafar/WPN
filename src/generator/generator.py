@@ -20,9 +20,12 @@ from simulator.services.services import Services
 from simulator.services.timer import Timer
 from simulator.simulator import Simulator
 from structures import Point, Size
-
+from matplotlib import pyplot as plt
 if TYPE_CHECKING:
     from main import MainRunner
+
+
+from algorithms.lstm.LSTM_CAE_tile_by_tile import CAE
 
 
 class Generator:
@@ -780,13 +783,14 @@ class Generator:
         maps = generator.generate_maps(m.main_services.settings.generator_nr_of_examples, Size(64, 64),
                                        m.main_services.settings.generator_gen_type, [0.1, 0.3], [1, 6], [8, 15], [35, 45])
 
-        """
-        if m.main_services.settings.generator_nr_of_examples > 0:
-            # show sample
-            for i in range(5):
-                plt.imshow(maps[i].grid, cmap=CAE.MAP_COLORMAP_FULL)
-                plt.show()
-        """
+        #This will display 5 of the maps generated
+        if m.main_services.settings.generator_show_gen_sample:
+            if m.main_services.settings.generator_nr_of_examples > 0:
+                # show sample
+                for i in range(5):
+                    plt.imshow(maps[i].grid, cmap=CAE.MAP_COLORMAP_FULL)
+                    plt.show()
+       
 
         if m.main_services.settings.generator_aug_labelling_features or m.main_services.settings.generator_aug_labelling_labels or \
                 m.main_services.settings.generator_aug_single_labelling_features or m.main_services.settings.generator_aug_single_labelling_labels:
