@@ -232,7 +232,7 @@ class CAE(MLModel):
             ],
             "save_name": "caelstm_section_cae",
             "training_data": [
-                "training_uniform_random_fill_10",
+                "training_uniform_random_fill_10", #IMPT
                 #"training_block_map_10",
                 #"training_house_10",
             ], # training_uniform_random_fill_10000_block_map_10000_house_10000, "training_uniform_random_fill_10000_block_map_10000", "training_house_10000", "training_uniform_random_fill_10000", "training_block_map_10000",
