@@ -31,6 +31,7 @@ from algorithms.configuration.configuration import Configuration
 from algorithms.lstm.LSTM_tile_by_tile import OnlineLSTM
 from algorithms.lstm.a_star_waypoint import WayPointNavigation
 from algorithms.lstm.combined_online_LSTM import CombinedOnlineLSTM
+from algorithms.lstm.LSTM_CAE_tile_by_tile import CAE
 
 
 # planner testing
@@ -108,13 +109,15 @@ gen_maps = {
 chosen_map = 'House'
 #Simulator
 mp = maps[chosen_map] #Choose which map is required
-algo = algorithms['Online LSTM'] #Choose which planner 
+algo = algorithms['A*'] #Choose which planner 
 ani = animations['Fast'] #Choose animation speed
 debug = debug['High'] #Choose debug level 
 #Generator
 gen_map = gen_maps[chosen_map] #Chooses map for generation, from maps available for generation. Same as map for simulation (Chosen map var)
 nbr_ex = 100 #Number of maps generated
 show_sample_map = False #shows 5 samples
+gen_start = True
+train_start = True
 
 
 #Assign values to the config class
@@ -127,13 +130,22 @@ config.simulator_write_debug_level = debug
 
 
 #Generator
-config.generator = True
+config.generator = gen_start
 config.generator_labelling_atlases = ['house_' + str(nbr_ex)]
 config.generator_nr_of_examples = nbr_ex
 config.generator_gen_type = gen_map
-config.generator_labelling_features = ['distance_to_goal_normalized', 'raycast_8_normalized', 'direction_to_goal_normalized', 'agent_goal_angle']
+config.generator_labelling_features = [
+    "distance_to_goal_normalized",
+    "raycast_8_normalized",
+    "direction_to_goal_normalized",
+    "agent_goal_angle"]
+#['distance_to_goal_normalized', 'raycast_8_normalized', 'direction_to_goal_normalized', 'agent_goal_angle']
 config.generator_labelling_labels =  ['next_position_index']
-config.generator_single_labelling_features = []
+config.generator_single_labelling_features = [
+    "distance_to_goal_normalized",
+    "raycast_8_normalized",
+    "direction_to_goal_normalized",
+    "agent_goal_angle"]
 config.generator_single_labelling_labels = []
 config.generator_aug_labelling_features = []
 config.generator_aug_labelling_labels = []
@@ -142,7 +154,7 @@ config.generator_aug_single_labelling_labels = []
 config.generator_modify = None
 config.generator_show_gen_sample = show_sample_map #New parameter to show 5 samples of the generated maps
 #Trainer
-config.trainer = True
+config.trainer = train_start
 config.trainer_model = BasicLSTMModule
 config.trainer_custom_config = None
 config.trainer_pre_process_data_only = False

@@ -599,7 +599,7 @@ class Generator:
         if len(atlases) == 1:
             self.__services.debug.write("Processing single atlas (overwrite True)", DebugLevel.BASIC)
             res = self.__label_single_maps(atlases[0], feature_list, label_list, single_label_list, single_label_list,
-                                           True)
+                                        True)
             self.__save_training_data(label_atlas_name, res)
             return
 
@@ -619,7 +619,7 @@ class Generator:
             t = t + next_res
 
         self.__save_training_data(label_atlas_name, t)
-
+     
     def __save_training_data(self, training_name: str, training_data: List[Dict[str, Any]]) -> None:
         self.__services.debug.write("Saving atlas labelling: " + training_name, DebugLevel.BASIC)
         self.__services.resources.training_data_dir.save(training_name, training_data)
@@ -628,6 +628,9 @@ class Generator:
     def __label_single_maps(self, atlas_name, feature_list: List[str], label_list: List[str],
                             single_feature_list: List[str], single_label_list: List[str], overwrite: bool) -> List[
         Dict[str, any]]:
+        """
+        Passed atlas name, feature list, label list, and returns res object with the map features labelled for training
+        """
         if not atlas_name:
             return []
 
