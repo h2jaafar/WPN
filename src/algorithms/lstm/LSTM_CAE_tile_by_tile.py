@@ -18,7 +18,7 @@ from algorithms.lstm.ML_model import MLModel, EvaluationResults
 from algorithms.lstm.map_processing import MapProcessing
 from simulator.services.services import Services
 from torchvision import transforms, datasets
-
+#import runtrainer 
 
 class CAEEncoder(nn.Module):
     def __init__(self, latent_dim: int):
@@ -235,7 +235,8 @@ class CAE(MLModel):
             ],
             "save_name": "caelstm_section_cae",
             "training_data": [
-                "training_house_10"
+                'training_house_100'
+                #training_" + str(runtrainer.gen_map) + "_" + str(runtrainer.nbr_ex)
                 # "training_uniform_random_fill_10", #IMPT
                 #"training_block_map_10",
                 #"training_house_10",

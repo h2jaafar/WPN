@@ -9,13 +9,13 @@ from algorithms.lstm.LSTM_tile_by_tile import BasicLSTMModule,OnlineLSTM
 from algorithms.lstm.ML_model import MLModel
 from simulator.services.debug import DebugLevel
 from analyzer.analyzer import Analyzer
-from generator.generator import Generator as generator
+from generator.generator import Generator
 
 #Might be redundant
 from structures import Size
 from simulator.services import services
 import pickle
-
+from simulator.services.services import Services, GenericServices
 # planner implementations
 from algorithms.classic.graph_based.a_star import AStar
 from algorithms.classic.graph_based.bug1 import Bug1
@@ -31,7 +31,7 @@ from algorithms.configuration.configuration import Configuration
 from algorithms.lstm.LSTM_tile_by_tile import OnlineLSTM
 from algorithms.lstm.a_star_waypoint import WayPointNavigation
 from algorithms.lstm.combined_online_LSTM import CombinedOnlineLSTM
-from algorithms.lstm.LSTM_CAE_tile_by_tile import CAE
+from algorithms.lstm.LSTM_CAE_tile_by_tile import CAE,LSTMCAEModel
 
 
 # planner testing
@@ -51,7 +51,6 @@ config = type(Configuration)
 
 config = Configuration()
 
-#Import them from classes next time, this is temporary (was causing issues during importing GUI, class not foud)
 maps = {
     "Uniform Random Fill": ("uniform_random_fill_10/0", True),
     "Block": ("block_map_10/6", True),
@@ -103,59 +102,65 @@ gen_maps = {
     "House" : "house"
 }
 
+labelling = {
+    BasicLSTMModule: [[
+    "distance_to_goal_normalized",
+    "raycast_8_normalized",
+    "direction_to_goal_normalized",
+    "agent_goal_angle"],['next_position_index'],[],[]],
+    CAE: [[],[],['global_map'],['global_map']],
+    LSTMCAEModel: [[],[],['global_map'],['global_map']]
+    
+    } 
 
 #Input hyperparametres here 
-#Universal
 chosen_map = 'House'
-#Simulator
-mp = maps[chosen_map] #Choose which map is required
 algo = algorithms['A*'] #Choose which planner 
 ani = animations['Fast'] #Choose animation speed
 debug = debug['High'] #Choose debug level 
-#Generator
-gen_map = gen_maps[chosen_map] #Chooses map for generation, from maps available for generation. Same as map for simulation (Chosen map var)
+training_algo = BasicLSTMModule #Chooses the algorithm to train, either CAE, BasicLSTMModule,LSTMCAEModel
 nbr_ex = 100 #Number of maps generated
 show_sample_map = False #shows 5 samples
 gen_start = True
 train_start = True
+sim_start = False
+#Cache
+config.clear_cache = True
 
+#Generator
+mp = maps[chosen_map] 
+gen_map = gen_maps[chosen_map] #Chooses map for generation
 
-#Assign values to the config class
-config.load_simulator = False
+#Simulator
+config.load_simulator = sim_start
 config.simulator_graphics = True
 config.simulator_initial_map, config.simulator_grid_display = mp
 config.simulator_algorithm_type, config.simulator_testing_type, config.simulator_algorithm_parameters = algo
 config.simulator_key_frame_speed, config.simulator_key_frame_skip = ani
 config.simulator_write_debug_level = debug
 
-
 #Generator
 config.generator = gen_start
-config.generator_labelling_atlases = ['house_' + str(nbr_ex)]
+config.generator_labelling_atlases = [gen_map + '_' + str(nbr_ex)]
 config.generator_nr_of_examples = nbr_ex
 config.generator_gen_type = gen_map
-config.generator_labelling_features = [
-    "distance_to_goal_normalized",
-    "raycast_8_normalized",
-    "direction_to_goal_normalized",
-    "agent_goal_angle"]
-#['distance_to_goal_normalized', 'raycast_8_normalized', 'direction_to_goal_normalized', 'agent_goal_angle']
-config.generator_labelling_labels =  ['next_position_index']
-config.generator_single_labelling_features = [
-    "distance_to_goal_normalized",
-    "raycast_8_normalized",
-    "direction_to_goal_normalized",
-    "agent_goal_angle"]
-config.generator_single_labelling_labels = []
+
+#These are for training
+config.generator_labelling_features = labelling[training_algo][0]
+config.generator_labelling_labels =  labelling[training_algo][1]
+config.generator_single_labelling_features = labelling[training_algo][2]
+config.generator_single_labelling_labels = labelling[training_algo][3]
+
 config.generator_aug_labelling_features = []
 config.generator_aug_labelling_labels = []
 config.generator_aug_single_labelling_features = []
 config.generator_aug_single_labelling_labels = []
 config.generator_modify = None
-config.generator_show_gen_sample = show_sample_map #New parameter to show 5 samples of the generated maps
+config.generator_show_gen_sample = show_sample_map
+
 #Trainer
 config.trainer = train_start
-config.trainer_model = BasicLSTMModule
+config.trainer_model = training_algo #Either BasicLSTMModule or CAE or LSTMCAEModel
 config.trainer_custom_config = None
 config.trainer_pre_process_data_only = False
 config.trainer_bypass_and_replace_pre_processed_cache = False
@@ -163,29 +168,13 @@ config.trainer_bypass_and_replace_pre_processed_cache = False
 #Analyzer
 config.analyzer = False
 
-#Cache
-config.clear_cache = False
-
-
-
-#Runs the modules which are loaded
-# MainRunner(config).run_multiple()
-
 MainRunner(config).run_multiple()
 
+#To generate map from image
+map_gen_from_img = False
 
-#These are the possible atlas names for training?
-
-""" 
-"caelstm_section_lstm_training_block_map_10000_model",
-"caelstm_section_lstm_training_uniform_random_fill_10000_model",
-"caelstm_section_lstm_training_house_10000_model",
-"caelstm_section_lstm_training_uniform_random_fill_10000_block_map_10000_house_10000_model",
-"caelstm_section_lstm_training_uniform_random_fill_10000_block_map_10000_model",
-"tile_by_tile_training_uniform_random_fill_10000_model",
-"tile_by_tile_training_block_map_10000_model",
-"tile_by_tile_training_house_10000_model",
-"tile_by_tile_training_uniform_random_fill_10000_block_map_10000_model",
-"tile_by_tile_training_uniform_random_fill_10000_block_map_10000_house_10000_model", 
-"""
+if map_gen_from_img == True:
+    Services = Services(config)
+    generated_map = Generator(Services)
+    generated_map.generate_map_from_image("map1.png",True,2)
 
