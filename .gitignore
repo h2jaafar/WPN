@@ -182,3 +182,6 @@ src/resources/maps/house_10/6.pickle
 src/resources/maps/house_10/7.pickle
 src/resources/maps/house_10/8.pickle
 src/resources/maps/house_10/9.pickle
+.vscode/settings.json
+.vscode/launch.json
+gui_config.pickle
