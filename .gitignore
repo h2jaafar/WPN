@@ -2,7 +2,7 @@
 builds/*
 
 # custom additions #
-training_data/
+
 *.pyc
 __pycache__/
 
@@ -164,7 +164,12 @@ src/.vscode/settings.json
 src/gui_config.pickle
 src/gui_config.pickle
 
-src/resources/*
+src/resources/maps/*
+src/resources/images/*
+src/resources/algorithms/*
+src/resources/screenshots/*
+src/resources/datasets/*
+
 
 src/resources/maps/house_10/0.pickle
 src/resources/maps/house_10/0.pickle

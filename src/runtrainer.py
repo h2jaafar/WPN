@@ -62,6 +62,7 @@ maps = {
     "SLAM Map 1 (compressed)": ("map11", True),
     "SLAM Map 2": ("map14", False),
     "SLAM Map 3": ("map12", False),
+    "House Expo Sample": ("_house_expo/house_expo_52",False)
     }
 
 algorithms = {
@@ -113,23 +114,27 @@ labelling = {
     
     } 
 
+
 #Input hyperparametres here 
-chosen_map = 'House'
+chosen_map = 'House Expo Sample'
 algo = algorithms['A*'] #Choose which planner 
 ani = animations['Fast'] #Choose animation speed
 debug = debug['High'] #Choose debug level 
 training_algo = BasicLSTMModule #Chooses the algorithm to train, either CAE, BasicLSTMModule,LSTMCAEModel
-nbr_ex = 100 #Number of maps generated
+nbr_ex = 10 #Number of maps generated
 show_sample_map = False #shows 5 samples
 gen_start = True
 train_start = True
 sim_start = False
+config.generator_house_expo = True
+analyzer_start = False
+
 #Cache
 config.clear_cache = True
 
 #Generator
 mp = maps[chosen_map] 
-gen_map = gen_maps[chosen_map] #Chooses map for generation
+ #Chooses map for generation
 
 #Simulator
 config.load_simulator = sim_start
@@ -141,9 +146,16 @@ config.simulator_write_debug_level = debug
 
 #Generator
 config.generator = gen_start
-config.generator_labelling_atlases = [gen_map + '_' + str(nbr_ex)]
-config.generator_nr_of_examples = nbr_ex
-config.generator_gen_type = gen_map
+if config.generator_house_expo:
+    gen_map = '_house_expo'
+    config.generator_labelling_atlases = [gen_map]
+    config.generator_nr_of_examples = nbr_ex
+    
+else:
+    gen_map = gen_maps[chosen_map]
+    config.generator_labelling_atlases = [gen_map + '_' + str(nbr_ex)]
+    config.generator_nr_of_examples = nbr_ex
+    config.generator_gen_type = gen_map
 
 #These are for training
 config.generator_labelling_features = labelling[training_algo][0]
@@ -166,15 +178,15 @@ config.trainer_pre_process_data_only = False
 config.trainer_bypass_and_replace_pre_processed_cache = False
 
 #Analyzer
-config.analyzer = False
+config.analyzer = analyzer_start
 
 MainRunner(config).run_multiple()
 
-#To generate map from image
-map_gen_from_img = False
+#To brute force generate map from image
+# map_gen_from_img = False
 
-if map_gen_from_img == True:
-    Services = Services(config)
-    generated_map = Generator(Services)
-    generated_map.generate_map_from_image("map1.png",True,2)
+# if map_gen_from_img == True:
+#     Services = Services(config)
+#     generated_map = Generator(Services)
+#     generated_map.generate_map_from_image("map1.png",True,2)
 

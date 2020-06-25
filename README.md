@@ -54,7 +54,10 @@ python3 main_gui.py
 
 **Trainer**
 This section is responsible for generating and labelling the training data used to train
-the Machine Learning models.
+the Machine Learning models. To run the trainer, use the runtrainer.py script in src. Modify
+the required hyperparameters (sim_start,gen_start,train_start), the algorithm you want to train,
+and the training_data you want to generate. WIP. Note, you must change the atlas name under the 
+LSTM module you are intending to train. Further explanation will be added. 
 
 **Generator**
 This section is a class wrapper over the third party Machine Learning libraries. It
@@ -109,7 +112,7 @@ its Service components, thus avoiding rendering, file writing and useless printi
 The Simulator was build by following the Model-View-Controller (MVC) pattern. The
 Model represents the logic part, the View renders the Model and the Controller handles
 the input from the keyboard and mouse, and calls the appropriate functions from the associated
-Model. 
+Model.
 
 The EventManager component is a communication service which allows the Model to
 update the View as there is no direct connection between them (from Model to View, the other

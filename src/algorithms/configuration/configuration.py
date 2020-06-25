@@ -30,6 +30,7 @@ class Configuration:
     generator_single_labelling_labels: List[str]
     generator_modify: Callable[[], Tuple[str, Callable[[Map], Map]]]
     generator_show_gen_sample: bool
+    generator_house_expo: bool
     trainer: bool
     trainer_model: Type[MLModel]
     trainer_custom_config: Optional[Dict[str, Any]]
@@ -66,6 +67,7 @@ class Configuration:
         self.generator_aug_single_labelling_labels = []
         self.generator_modify = None
         self.generator_show_gen_sample = False
+        self.generator_house_expo = False
         # Trainer
         self.trainer = False
         self.trainer_model = BasicLSTMModule

@@ -16,7 +16,7 @@ This program will read a pickle file to analyze the conents. Useful for debuggin
 """
 
 trainingdata = open(
-    "resources/training_data/training_house_10.pickle",
+    "resources/maps/house_expo_52.pickle",
     "rb")
 emp = pickle.load(trainingdata)
 print(emp)

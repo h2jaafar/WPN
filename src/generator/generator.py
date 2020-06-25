@@ -4,7 +4,7 @@ from typing import Tuple, List, TYPE_CHECKING, Dict, Callable, Type, Set, Any
 import numpy as np
 from pygame.surface import Surface
 import math
-
+import os
 from algorithms.classic.graph_based.a_star import AStar
 from algorithms.classic.testing.a_star_testing import AStarTesting
 from algorithms.configuration.configuration import Configuration
@@ -23,7 +23,7 @@ from structures import Point, Size
 from matplotlib import pyplot as plt
 if TYPE_CHECKING:
     from main import MainRunner
-
+from natsort import natsorted
 
 from algorithms.lstm.LSTM_CAE_tile_by_tile import CAE
 
@@ -46,34 +46,47 @@ class Generator:
         self.generate_maps = self.__services.debug.debug_func(DebugLevel.BASIC)(self.generate_maps)
         self.label_maps = self.__services.debug.debug_func(DebugLevel.BASIC)(self.label_maps)
 
-    def generate_map_from_image(self, image_name: str, rand_entities: bool = False, entity_radius: int = None) -> Map:
+    def generate_map_from_image(self, image_name: str, rand_entities: bool = False, entity_radius: int = None, house_expo_flag: bool = False) -> Map:
         """
         Generate a map from an image
         Load the image from the default location and save the map in the default location
         :param image_name: The image name
         :return: The map
         """
-        self.__services.debug.write("Started map generation from image: " + str(image_name), DebugLevel.BASIC)
+        self.__services.debug.write("Started map generation from image: " + str(image_name) + " With House_expo = " + str(house_expo_flag),
+        DebugLevel.BASIC)
         timer: Timer = Timer()
-        surface: Surface = self.__services.resources.images_dir.load(image_name)
-
+        if house_expo_flag:
+            surface: Surface = self.__services.resources.house_expo_dir.load(image_name) #loading directory
+        else:
+            surface: Surface = self.__services.resources.images_dir.load(image_name) #loading directory
+        self.__services.debug.write("Image loaded with Resolution:" + str(surface.get_width()) +" x "+ str(surface.get_height()),DebugLevel.HIGH)
         grid: List[List[int]] = [[0 for _ in range(surface.get_width())] for _ in range(surface.get_height())]
         agent_avg_location: np.ndarray = np.array([.0, .0])
         agent_avg_count: int = 1
-
         goal_avg_location: np.ndarray = np.array([.0, .0])
-        goal_avg_count: int = 1
 
-        for x in range(surface.get_width()):
-            for y in range(surface.get_height()):
-                if Generator.is_in_color_range(surface.get_at((x, y)), Generator.AGENT_COLOR, 5):
-                    agent_avg_location, agent_avg_count = \
-                        Generator.increment_moving_average(agent_avg_location, agent_avg_count, np.array([x, y]))
-                elif Generator.is_in_color_range(surface.get_at((x, y)), Generator.GOAL_COLOR, 5):
-                    goal_avg_location, goal_avg_count = \
-                        Generator.increment_moving_average(goal_avg_location, goal_avg_count, np.array([x, y]))
-                elif Generator.is_in_color_range(surface.get_at((x, y)), Generator.WALL_COLOR):
-                    grid[y][x] = DenseMap.WALL_ID
+        if house_expo_flag: 
+            '''
+            We can optimize for house_expo dataset by skipping the check for the goal and agent at each pixel,
+            instead, we can only identify obstacles
+            '''
+            self.__services.debug.write("Begin iteration through map",DebugLevel.HIGH)
+            for x in range(surface.get_width()):
+                for y in range(surface.get_height()):
+                    if Generator.is_in_color_range(surface.get_at((x, y)), Generator.WALL_COLOR):
+                        grid[y][x] = DenseMap.WALL_ID
+        else: 
+             for x in range(surface.get_width()):
+                for y in range(surface.get_height()):
+                    if Generator.is_in_color_range(surface.get_at((x, y)), Generator.AGENT_COLOR, 5):
+                        agent_avg_location, agent_avg_count = \
+                            Generator.increment_moving_average(agent_avg_location, agent_avg_count, np.array([x, y]))
+                    elif Generator.is_in_color_range(surface.get_at((x, y)), Generator.GOAL_COLOR, 5):
+                        goal_avg_location, goal_avg_count = \
+                            Generator.increment_moving_average(goal_avg_location, goal_avg_count, np.array([x, y]))
+                    if Generator.is_in_color_range(surface.get_at((x, y)), Generator.WALL_COLOR):
+                        grid[y][x] = DenseMap.WALL_ID
 
         agent_avg_location = np.array(agent_avg_location, dtype=int)
         goal_avg_location = np.array(goal_avg_location, dtype=int)
@@ -81,14 +94,29 @@ class Generator:
 
         if rand_entities:
             self.__place_random_agent_and_goal(grid, Size(surface.get_width(), surface.get_height()))
+            self.__services.debug.write("Placed random agent and goal ",DebugLevel.HIGH)
         else:
             grid[agent_avg_location[1]][agent_avg_location[0]] = DenseMap.AGENT_ID
             grid[goal_avg_location[1]][goal_avg_location[0]] = DenseMap.GOAL_ID
+        
+        if not house_expo_flag: 
+            '''
+            We can optimize the house_expo generation by skipping this step, 
+            as we have already defined the agent radius
+            '''
+            self.__services.debug.write("Skipped agent_radius change checking ",DebugLevel.HIGH)
 
-        for x in range(surface.get_width()):
-            for y in range(surface.get_height()):
-                if Generator.is_in_color_range(surface.get_at((x, y)), Generator.AGENT_COLOR, 5):
-                    agent_radius = max(agent_radius, np.linalg.norm(agent_avg_location - np.array([x, y])))
+            for x in range(surface.get_width()):
+                for y in range(surface.get_height()):
+                    if Generator.is_in_color_range(surface.get_at((x, y)), Generator.AGENT_COLOR, 5):
+                        '''
+                        If color at x y is red (agent) then change the radius of the agent to the max 
+                        Change the agent radius to the max between the old radius (from previous iteration )
+                        and the magnitude of the agent location - the point 
+                        This basically defines the agent radius as the largest red size. But we don't need to do
+                        this as we are supplying our own radius
+                        '''
+                        agent_radius = max(agent_radius, np.linalg.norm(agent_avg_location - np.array([x, y])))
 
         agent_radius = int(agent_radius)
 
@@ -98,13 +126,18 @@ class Generator:
         res_map: DenseMap = DenseMap(grid)
         res_map.agent.radius = agent_radius
         res_map.goal.radius = agent_radius
+
         self.__services.debug.write("Generated initial dense map in " + str(timer.stop()) + " seconds",
                                     DebugLevel.BASIC)
         timer = Timer()
         res_map.extend_walls()
         self.__services.debug.write("Extended walls in " + str(timer.stop()) + " seconds", DebugLevel.BASIC)
         map_name: str = str(image_name.split('.')[0]) + ".pickle"
-        self.__services.resources.maps_dir.save(map_name, res_map)
+        if house_expo_flag:
+            path = "resources/maps/_house_expo/"
+            self.__services.resources.house_expo_dir.save(map_name, res_map, path)
+        else:
+            self.__services.resources.maps_dir.save(map_name, res_map)
         self.__services.debug.write("Finished generation. Map is in resources folder", DebugLevel.BASIC)
         return res_map
 
@@ -744,6 +777,13 @@ class Generator:
         mp = modify_f(mp)
         self.__services.resources.maps_dir.save(map_name, mp)
 
+    def convert_house_expo(self):
+        path = './resources/house_expo/'
+        print("Taking images from" + path) 
+        #print(os.listdir(path))
+        for filename in natsorted(os.listdir(path)):
+            self.generate_map_from_image(filename,True,2,True)
+
     @staticmethod
     def increment_moving_average(cur_value: np.ndarray, count: int, new_number: np.ndarray) -> Tuple[np.ndarray, int]:
         """
@@ -783,11 +823,12 @@ class Generator:
         if m.main_services.settings.generator_modify:
             generator.modify_map(*m.main_services.settings.generator_modify())
 
-        maps = generator.generate_maps(m.main_services.settings.generator_nr_of_examples, Size(64, 64),
-                                       m.main_services.settings.generator_gen_type, [0.1, 0.3], [1, 6], [8, 15], [35, 45])
+        if not m.main_services.settings.generator_house_expo:
+            maps = generator.generate_maps(m.main_services.settings.generator_nr_of_examples, Size(64, 64),
+                                        m.main_services.settings.generator_gen_type, [0.1, 0.3], [1, 6], [8, 15], [35, 45])
 
         #This will display 5 of the maps generated
-        if m.main_services.settings.generator_show_gen_sample:
+        if m.main_services.settings.generator_show_gen_sample and not m.main_services.settings.generator_house_expo:
             if m.main_services.settings.generator_nr_of_examples > 0:
                 # show sample
                 for i in range(5):
@@ -803,6 +844,15 @@ class Generator:
                                          m.main_services.settings.generator_aug_labelling_labels,
                                          m.main_services.settings.generator_aug_single_labelling_features,
                                          m.main_services.settings.generator_aug_single_labelling_labels)
+        
+        if m.main_services.settings.generator_house_expo: 
+            generator.convert_house_expo()
+            # generator.label_maps(m.main_services.settings.generator_labelling_atlases,
+            #                      m.main_services.settings.generator_labelling_features,
+            #                      m.main_services.settings.generator_labelling_labels,
+            #                      m.main_services.settings.generator_single_labelling_features,
+            #                      m.main_services.settings.generator_single_labelling_labels)
+     
         else:
             # create
             generator.label_maps(m.main_services.settings.generator_labelling_atlases,
