@@ -116,17 +116,17 @@ labelling = {
 
 
 #Input hyperparametres here 
-chosen_map = 'House Expo Sample'
+chosen_map = 'House'
 algo = algorithms['A*'] #Choose which planner 
 ani = animations['Fast'] #Choose animation speed
 debug = debug['High'] #Choose debug level 
 training_algo = BasicLSTMModule #Chooses the algorithm to train, either CAE, BasicLSTMModule,LSTMCAEModel
-nbr_ex = 10 #Number of maps generated
+nbr_ex = 5 #Number of maps generated
 show_sample_map = False #shows 5 samples
 gen_start = True
-train_start = True
+train_start = False
 sim_start = False
-config.generator_house_expo = True
+config.generator_house_expo = False
 analyzer_start = False
 
 #Cache

@@ -20,6 +20,13 @@ class Configuration:
     simulator_key_frame_skip: int
     simulator_write_debug_level: DebugLevel
     simulator_window_size: Size
+    #VIN
+    simulator_vin_plot: bool
+    simulator_vin_weights: int
+    simulator_vin_imsize: int
+    simulator_vin_l_h: int
+    simulator_vin_l_q: int
+
     generator: bool
     generator_labelling_atlases: List[Any]
     generator_gen_type: str
