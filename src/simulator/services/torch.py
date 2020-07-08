@@ -18,7 +18,6 @@ class Torch(Service):
 
     def __init_seed(self):
         if torch.cuda.is_available():
-            print("Number of GPU's Available: ", torch.cuda.device_count())
             torch.backends.cudnn.deterministic = True
         torch.manual_seed(self.SEED)
 

@@ -14,7 +14,7 @@ class Resources(Directory):
     house_expo_dir: HouseExpoDir
 
     def __init__(self, services: Services):
-        super().__init__(services, "resources", "./src/")
+        super().__init__(services, "resources", "./")
 
         self.model_dir = ModelDir(self._services, "algorithms", self._full_path())
         self.cache_dir = CacheDir(self._services, "cache", self._full_path())
