@@ -239,8 +239,8 @@ class CAE(MLModel):
                 #'training_house_100'
                 #"training_" + str(config.) + "_" + str(ui.nbr_ex)
                 # "training_uniform_random_fill_10", #IMPT
-                "training_uniform_random_fill_100",
-                #"training_house_10",
+               #"training_uniform_random_fill_100",
+                "training_house_1000",
             ], # training_uniform_random_fill_10000_block_map_10000_house_10000, "training_uniform_random_fill_10000_block_map_10000", "training_house_10000", "training_uniform_random_fill_10000", "training_block_map_10000",
             "use_mnist_instead": False,
             "mnist_size": None,

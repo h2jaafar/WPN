@@ -5,6 +5,7 @@ import numpy as np
 from pygame.surface import Surface
 import math
 import os
+import json
 from algorithms.classic.graph_based.a_star import AStar
 from algorithms.classic.testing.a_star_testing import AStarTesting
 from algorithms.configuration.configuration import Configuration
@@ -170,14 +171,14 @@ class Generator:
             agent_pos: Point = self.__get_rand_position(dimensions)
 
             if grid[agent_pos.y][agent_pos.x] == DenseMap.CLEAR_ID:
-                grid[agent_pos.y][agent_pos.x] = DenseMap.AGENT_ID
+                grid[agent_pos.y][agent_pos.x] = DenseMap.AGENT_ID #Changes the value of pos on grid to 2 for agent id 
                 break
 
         while True:
             goal_pos: Point = self.__get_rand_position(dimensions)
 
             if grid[goal_pos.y][goal_pos.x] == DenseMap.CLEAR_ID:
-                grid[goal_pos.y][goal_pos.x] = DenseMap.GOAL_ID
+                grid[goal_pos.y][goal_pos.x] = DenseMap.GOAL_ID #Changes the value of pos on grid to 3 for goal id 
                 break
 
     def __place_entity_near_corner(self, entity: Type[Entity], corner: int, grid: List[List[int]], dimensions: Size) -> \
@@ -562,7 +563,7 @@ class Generator:
         return DenseMap(grid)
 
     def generate_maps(self, nr_of_samples: int, dimensions: Size, gen_type: str, fill_range: List[float],
-                      nr_of_obstacle_range: List[int], min_map_range: List[int], max_map_range: List[int]) -> List[Map]:
+                      nr_of_obstacle_range: List[int], min_map_range: List[int], max_map_range: List[int],json_save: bool = False) -> List[Map]:
         if gen_type not in Generator.AVAILABLE_GENERATION_METHODS:
             raise Exception(
                 "Generation type {} does not exist in {}".format(gen_type, self.AVAILABLE_GENERATION_METHODS))
@@ -588,26 +589,43 @@ class Generator:
         maps: List[Map] = []
 
         for _ in range(nr_of_samples):
+
             fill_rate = fill_range[0] + torch.rand((1,)) * (fill_range[1] - fill_range[0])
-            if gen_type == "uniform_random_fill":
+            if gen_type == "uniform_random_fill": #random fill
                 mp: Map = self.__generate_random_map(dimensions, fill_rate)
-            elif gen_type == "block_map":
+            elif gen_type == "block_map": #block
                 mp: Map = self.__generate_random_const_obstacles(
                     dimensions,
                     fill_rate,
                     int(torch.randint(nr_of_obstacle_range[0], nr_of_obstacle_range[1], (1,)).item())
                 )
-            else:
+            else: #house map
                 min_map_size = int(torch.randint(min_map_range[0], min_map_range[1], (1,)).item())
+                print(min_map_size)
                 max_map_size = int(torch.randint(max_map_range[0], max_map_range[1], (1,)).item())
+                print(max_map_size)
                 mp: Map = self.__generate_random_house(
                     dimensions,
                     min_room_size=Size(min_map_size, min_map_size),
                     max_room_size=Size(max_map_size, max_map_size),
                 )
+            #print('grid is \n', mp.grid)
             atlas.append(mp)
             maps.append(mp)
             progress_bar.step()
+          
+            map_as_dict = {
+                "goal" : [mp.goal.position.x,mp.goal.position.y],
+                "agent" : [mp.agent.position.x, mp.agent.position.y],
+                "grid" : mp.grid 
+            }
+            if json_save: 
+                with open('output path here'+ str(_) + '.json', 'w') as outfile:
+                    json.dump(map_as_dict,outfile)
+                    self.__services.debug.write("Dumping JSON: " + str(_) + "\n", DebugLevel.LOW)
+
+
+        #print(maps[1].grid)
 
         self.__services.debug.write("Finished atlas generation: " + str(atlas_name) + "\n", DebugLevel.BASIC)
         return maps
@@ -824,8 +842,21 @@ class Generator:
             generator.modify_map(*m.main_services.settings.generator_modify())
 
         if not m.main_services.settings.generator_house_expo:
-            maps = generator.generate_maps(m.main_services.settings.generator_nr_of_examples, Size(64, 64),
-                                        m.main_services.settings.generator_gen_type, [0.1, 0.3], [1, 6], [8, 15], [35, 45])
+            if m.main_services.settings.generator_size == 8: #Fill rate and nr obstacle range (1,2) is for unifrom random fill (0.1,0.2)
+                maps = generator.generate_maps(m.main_services.settings.generator_nr_of_examples, Size(8, 8),
+                                        m.main_services.settings.generator_gen_type, [0.1, 0.2], [1, 2], [3,4], [5, 7],json_save = True)
+
+            if m.main_services.settings.generator_size == 16:
+                maps = generator.generate_maps(m.main_services.settings.generator_nr_of_examples, Size(16, 16),
+                                        m.main_services.settings.generator_gen_type, [0.1, 0.2], [1, 4], [4,6], [8, 11],json_save = True)
+
+            if m.main_services.settings.generator_size == 28:
+                maps = generator.generate_maps(m.main_services.settings.generator_nr_of_examples, Size(28, 28),
+                                        m.main_services.settings.generator_gen_type, [0.1, 0.3], [1, 4], [6,10], [14, 22],json_save = True)
+
+            else:
+                maps = generator.generate_maps(m.main_services.settings.generator_nr_of_examples, Size(64, 64),
+                                        m.main_services.settings.generator_gen_type, [0.1, 0.3], [1, 6], [8,15], [35, 45],json_save = False)
 
         #This will display 5 of the maps generated
         if m.main_services.settings.generator_show_gen_sample and not m.main_services.settings.generator_house_expo:
@@ -854,7 +885,7 @@ class Generator:
             #                      m.main_services.settings.generator_single_labelling_labels)
      
         else:
-            # create
+            
             generator.label_maps(m.main_services.settings.generator_labelling_atlases,
                                  m.main_services.settings.generator_labelling_features,
                                  m.main_services.settings.generator_labelling_labels,

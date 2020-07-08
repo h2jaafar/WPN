@@ -65,6 +65,9 @@ maps = {
     "House Expo Sample": ("_house_expo/house_expo_52",False)
     }
 
+#LSTM Bagging is referred to as CombinedOnlineLSTM, it is used as a glboal kernel for LWP
+
+
 algorithms = {
     "A*": (AStar, AStarTesting, ([], {})),
     "Global Way-point LSTM": (WayPointNavigation, WayPointNavigationTesting, ([], {"global_kernel": (CombinedOnlineLSTM, ([], {})), "global_kernel_max_it": 100})),
@@ -110,24 +113,27 @@ labelling = {
     "direction_to_goal_normalized",
     "agent_goal_angle"],['next_position_index'],[],[]],
     CAE: [[],[],['global_map'],['global_map']],
-    LSTMCAEModel: [[],[],['global_map'],['global_map']]
+    LSTMCAEModel: [[],[],['global_map'],['global_map']],
+    CombinedOnlineLSTM: [[],[],['global_map'],['global_map']]
     
     } 
 
 
 #Input hyperparametres here 
-chosen_map = 'House'
+chosen_map = 'Uniform Random Fill'
 algo = algorithms['A*'] #Choose which planner 
 ani = animations['Fast'] #Choose animation speed
 debug = debug['High'] #Choose debug level 
-training_algo = BasicLSTMModule #Chooses the algorithm to train, either CAE, BasicLSTMModule,LSTMCAEModel
-nbr_ex = 5 #Number of maps generated
+training_algo = CombinedOnlineLSTM #Chooses the algorithm to train, either CAE, BasicLSTMModule,LSTMCAEModel
+nbr_ex = 100 #Number of maps generated
 show_sample_map = False #shows 5 samples
 gen_start = True
 train_start = False
 sim_start = False
 config.generator_house_expo = False
 analyzer_start = False
+config.generator_size = 64 # Change the size of the maps generated
+
 
 #Cache
 config.clear_cache = True
@@ -157,6 +163,7 @@ else:
     config.generator_nr_of_examples = nbr_ex
     config.generator_gen_type = gen_map
 
+
 #These are for training
 config.generator_labelling_features = labelling[training_algo][0]
 config.generator_labelling_labels =  labelling[training_algo][1]
@@ -173,7 +180,11 @@ config.generator_show_gen_sample = show_sample_map
 #Trainer
 config.trainer = train_start
 config.trainer_model = training_algo #Either BasicLSTMModule or CAE or LSTMCAEModel
-config.trainer_custom_config = None
+config.trainer_custom_config = {
+    "local_kernel": (AStar, ([], {})),
+    "global_kernel": (CombinedOnlineLSTM, ([], {})), "global_kernel_max_it": 100
+    }
+
 config.trainer_pre_process_data_only = False
 config.trainer_bypass_and_replace_pre_processed_cache = False
 

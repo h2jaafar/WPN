@@ -38,6 +38,7 @@ class Configuration:
     generator_modify: Callable[[], Tuple[str, Callable[[Map], Map]]]
     generator_show_gen_sample: bool
     generator_house_expo: bool
+    generator_size: int
     trainer: bool
     trainer_model: Type[MLModel]
     trainer_custom_config: Optional[Dict[str, Any]]
@@ -75,6 +76,7 @@ class Configuration:
         self.generator_modify = None
         self.generator_show_gen_sample = False
         self.generator_house_expo = False
+        self.generator_size = 64
         # Trainer
         self.trainer = False
         self.trainer_model = BasicLSTMModule

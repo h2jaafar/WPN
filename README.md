@@ -58,7 +58,11 @@ the Machine Learning models. To run the trainer, use the runtrainer.py script in
 the required hyperparameters (sim_start,gen_start,train_start), the algorithm you want to train,
 and the training_data you want to generate. WIP. Note, you must change the atlas name under the 
 LSTM module you are intending to train. Further explanation will be added. Note, you must also 
-create a folder named _cache_ in src>resources in order for the trainer to function correctly. 
+create a folder named _cache_ in src>resources in order for the trainer to function correctly
+(This has been fixed by using makedirs instead of mkdir).
+
+When editing in any desired IDE, ensure you are using the PathBench>SRC folder as the working 
+directory, else it will create a directory in an unwanted spot. 
 
 **Generator**
 This section is a class wrapper over the third party Machine Learning libraries. It

@@ -13,7 +13,11 @@ from algorithms.configuration.configuration import Configuration
 from algorithms.configuration.maps.dense_map import DenseMap
 from algorithms.configuration.maps.map import Map
 from algorithms.lstm.LSTM_tile_by_tile import OnlineLSTM
+from algorithms.lstm.combined_online_LSTM import CombinedOnlineLSTM
+from algorithms.classic.testing.combined_online_lstm_testing import CombinedOnlineLSTMTesting
 from algorithms.lstm.a_star_waypoint import WayPointNavigation
+from algorithms.classic.testing.way_point_navigation_testing import WayPointNavigationTesting
+
 from maps import Maps
 from simulator.services.debug import DebugLevel, Debug
 from simulator.services.services import Services
@@ -423,7 +427,7 @@ class Analyzer:
         maps = self.__convert_maps(maps)
         # maps = [Maps.grid_map_labyrinth, Maps.grid_map_labyrinth2]
 
-        '''algorithms: List[Tuple[Type[Algorithm], Type[BasicTesting], Tuple[list, dict]]] = [
+        algorithms: List[Tuple[Type[Algorithm], Type[BasicTesting], Tuple[list, dict]]] = [
             (AStar, AStarTesting, ([], {})),
             (OnlineLSTM, BasicTesting, ([], {"load_name": "tile_by_tile_training_uniform_random_fill_10000_model"})),
             (OnlineLSTM, BasicTesting, ([], {"load_name": "tile_by_tile_training_block_map_10000_model"})),
@@ -439,21 +443,21 @@ class Analyzer:
             (WayPointNavigation, WayPointNavigationTesting, ([], {"global_kernel_max_it": 20, "global_kernel": (OnlineLSTM, ([], {"load_name": "caelstm_section_lstm_training_block_map_10000_model"}))})),
             (WayPointNavigation, WayPointNavigationTesting, ([], {"global_kernel_max_it": 20, "global_kernel": (OnlineLSTM, ([], {"load_name": "tile_by_tile_training_uniform_random_fill_10000_block_map_10000_house_10000_model"}))})),
             (WayPointNavigation, WayPointNavigationTesting, ([], {"global_kernel_max_it": 20, "global_kernel": (CombinedOnlineLSTM, ([], {}))})),
-        ]'''
-
-        algorithms: List[Tuple[Type[Algorithm], Type[BasicTesting], Tuple[list, dict]]] = [
-            (AStar, AStarTesting, ([], {})),
-            #(RT, BasicTesting, ([], {})),
-            (RRT, BasicTesting, ([], {})),
-            (RRT_Star, BasicTesting, ([], {})),
-            (RRT_Connect, BasicTesting, ([], {})),
-            (Wavefront, WavefrontTesting, ([], {})),
-            (Dijkstra, DijkstraTesting, ([], {})),
-            #(Bug1, BasicTesting, ([], {})),
-            #(Bug2, BasicTesting, ([], {}))
         ]
 
-        '''algorithm_names: List[str] = [
+        # algorithms: List[Tuple[Type[Algorithm], Type[BasicTesting], Tuple[list, dict]]] = [
+        #     (AStar, AStarTesting, ([], {})),
+        #     #(RT, BasicTesting, ([], {})),
+        #     (RRT, BasicTesting, ([], {})),
+        #     (RRT_Star, BasicTesting, ([], {})),
+        #     (RRT_Connect, BasicTesting, ([], {})),
+        #     (Wavefront, WavefrontTesting, ([], {})),
+        #     (Dijkstra, DijkstraTesting, ([], {})),
+        #     #(Bug1, BasicTesting, ([], {})),
+        #     #(Bug2, BasicTesting, ([], {}))
+        # ]
+
+        algorithm_names: List[str] = [
             "A*",
             "Online LSTM on uniform_random_fill_10000 (paper solution)",
             "Online LSTM on block_map_10000",
@@ -469,19 +473,19 @@ class Analyzer:
             "WayPointNavigation with local kernel: A* and global kernel: CAE Online LSTM on block_map_10000 (paper solution)",
             "WayPointNavigation with local kernel: A* and global kernel: Online LSTM on uniform_random_fill_10000_block_map_10000_house_10000 (paper solution)",
             "WayPointNavigation with local kernel: A* and global kernel: Combined Online LSTM (proposed solution)",
-        ]'''
-
-        algorithm_names: List[str] = [
-            "A*",
-            #"RT",
-            "RRT",
-            "RRT*",
-            "RRT-Connect",
-            "Wave-front",
-            "Dijkstra",
-            #"Bug1",
-            #"Bug2"
         ]
+
+        # algorithm_names: List[str] = [
+        #     "A*",
+        #     #"RT",
+        #     "RRT",
+        #     "RRT*",
+        #     "RRT-Connect",
+        #     "Wave-front",
+        #     "Dijkstra",
+        #     #"Bug1",
+        #     #"Bug2"
+        # ]
 
         self.__services.debug.write("", timestamp=False, streams=[self.__analysis_stream])
         self.__services.debug.write("Starting basic analysis: number of maps = {}, number of algorithms = {}".format(len(maps), len(algorithms)), end="\n\n", streams=[self.__analysis_stream])
