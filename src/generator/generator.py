@@ -800,6 +800,7 @@ class Generator:
         print("Taking images from" + path) 
         #print(os.listdir(path))
         for filename in natsorted(os.listdir(path)):
+            print('filename:', filename)
             self.generate_map_from_image(filename,True,2,True)
 
     @staticmethod

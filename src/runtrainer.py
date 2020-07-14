@@ -62,7 +62,7 @@ maps = {
     "SLAM Map 1 (compressed)": ("map11", True),
     "SLAM Map 2": ("map14", False),
     "SLAM Map 3": ("map12", False),
-    "House Expo Sample": ("_house_expo/house_expo_52",False)
+    "House Expo Sample": ("_house_expo/10",False)
     }
 
 #LSTM Bagging is referred to as CombinedOnlineLSTM, it is used as a glboal kernel for LWP
@@ -120,16 +120,16 @@ labelling = {
 
 
 #Input hyperparametres here 
-chosen_map = 'Uniform Random Fill'
+chosen_map = 'House Expo Sample'
 algo = algorithms['A*'] #Choose which planner 
 ani = animations['Fast'] #Choose animation speed
 debug = debug['High'] #Choose debug level 
 training_algo = CombinedOnlineLSTM #Chooses the algorithm to train, either CAE, BasicLSTMModule,LSTMCAEModel
 nbr_ex = 100 #Number of maps generated
 show_sample_map = False #shows 5 samples
-gen_start = True
+gen_start = False
 train_start = False
-sim_start = False
+sim_start = True
 config.generator_house_expo = False
 analyzer_start = False
 config.generator_size = 64 # Change the size of the maps generated
@@ -157,7 +157,7 @@ if config.generator_house_expo:
     config.generator_labelling_atlases = [gen_map]
     config.generator_nr_of_examples = nbr_ex
     
-else:
+elif gen_start:
     gen_map = gen_maps[chosen_map]
     config.generator_labelling_atlases = [gen_map + '_' + str(nbr_ex)]
     config.generator_nr_of_examples = nbr_ex
