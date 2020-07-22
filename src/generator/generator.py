@@ -29,6 +29,7 @@ from natsort import natsorted
 from algorithms.lstm.LSTM_CAE_tile_by_tile import CAE
 
 
+
 class Generator:
     """
     Used to generate maps
@@ -601,9 +602,9 @@ class Generator:
                 )
             else: #house map
                 min_map_size = int(torch.randint(min_map_range[0], min_map_range[1], (1,)).item())
-                print(min_map_size)
+                # print(min_map_size)
                 max_map_size = int(torch.randint(max_map_range[0], max_map_range[1], (1,)).item())
-                print(max_map_size)
+                # print(max_map_size)
                 mp: Map = self.__generate_random_house(
                     dimensions,
                     min_room_size=Size(min_map_size, min_map_size),
@@ -620,7 +621,7 @@ class Generator:
                 "grid" : mp.grid 
             }
             if json_save: 
-                with open('output path here'+ str(_) + '.json', 'w') as outfile:
+                with open('./resources/vin_maps/16x16/1000/house/'+ str(_+1000) + '.json', 'w') as outfile:
                     json.dump(map_as_dict,outfile)
                     self.__services.debug.write("Dumping JSON: " + str(_) + "\n", DebugLevel.LOW)
 
@@ -885,7 +886,7 @@ class Generator:
             #                      m.main_services.settings.generator_single_labelling_features,
             #                      m.main_services.settings.generator_single_labelling_labels)
      
-        else:
+        else: #TODO: UNHIGHLIGHT THIS
             
             generator.label_maps(m.main_services.settings.generator_labelling_atlases,
                                  m.main_services.settings.generator_labelling_features,

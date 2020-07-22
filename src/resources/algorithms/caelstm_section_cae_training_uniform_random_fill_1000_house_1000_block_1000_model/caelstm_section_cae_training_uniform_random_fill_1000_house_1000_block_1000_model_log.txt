@@ -1,0 +1,357 @@
+[2020-07-20 16:48:30] - Starting holdout training: {
+	data_features: [],
+	data_labels: [],
+	data_single_features: ['global_map'],
+	data_single_labels: ['global_map'],
+	epochs: 100,
+	loss: L1Loss(),
+	optimizer: <function CAE.get_config.<locals>.<lambda> at 0x7fb0b4f69830>,
+	validation_ratio: 0.2,
+	test_ratio: 0.2,
+	save_name: caelstm_section_cae,
+	training_data: ['training_uniform_random_fill_1000', 'training_house_1000', 'training_block_1000'],
+	batch_size: 50,
+	use_mnist_instead: False,
+	mnist_size: None,
+	with_skip_connections: True,
+	in_dim: [64, 64],
+	latent_dim: 100,
+}
+
+[2020-07-20 16:48:30] - Starting data pre processing
+[2020-07-20 16:48:30] - Cache hit, training data loaded from cache
+[2020-07-20 16:48:30] - Finished data pre processing 
+
+[2020-07-20 16:48:30] - Training: <class 'algorithms.lstm.LSTM_CAE_tile_by_tile.CAE'>
+[2020-07-20 16:48:36] - Training 	 Epoch: 0 	 Loss: 0.828369
+[2020-07-20 16:48:38] - Validation 	 Epoch: 0 	 Loss: 1.961524
+
+[2020-07-20 16:48:43] - Training 	 Epoch: 1 	 Loss: 0.447556
+[2020-07-20 16:48:46] - Validation 	 Epoch: 1 	 Loss: 1.372767
+
+[2020-07-20 16:48:52] - Training 	 Epoch: 2 	 Loss: 0.257475
+[2020-07-20 16:48:55] - Validation 	 Epoch: 2 	 Loss: 0.729204
+
+[2020-07-20 16:49:00] - Training 	 Epoch: 3 	 Loss: 0.176506
+[2020-07-20 16:49:02] - Validation 	 Epoch: 3 	 Loss: 0.534817
+
+[2020-07-20 16:49:07] - Training 	 Epoch: 4 	 Loss: 0.130716
+[2020-07-20 16:49:08] - Validation 	 Epoch: 4 	 Loss: 0.369788
+
+[2020-07-20 16:49:13] - Training 	 Epoch: 5 	 Loss: 0.101944
+[2020-07-20 16:49:15] - Validation 	 Epoch: 5 	 Loss: 0.215843
+
+[2020-07-20 16:49:21] - Training 	 Epoch: 6 	 Loss: 0.082453
+[2020-07-20 16:49:23] - Validation 	 Epoch: 6 	 Loss: 0.207155
+
+[2020-07-20 16:49:28] - Training 	 Epoch: 7 	 Loss: 0.068326
+[2020-07-20 16:49:43] - Validation 	 Epoch: 7 	 Loss: 0.211156
+
+[2020-07-20 16:49:49] - Training 	 Epoch: 8 	 Loss: 0.057841
+[2020-07-20 16:49:51] - Validation 	 Epoch: 8 	 Loss: 0.190355
+
+[2020-07-20 16:49:56] - Training 	 Epoch: 9 	 Loss: 0.049742
+[2020-07-20 16:49:58] - Validation 	 Epoch: 9 	 Loss: 0.148472
+
+[2020-07-20 16:50:03] - Training 	 Epoch: 10 	 Loss: 0.043359
+[2020-07-20 16:50:04] - Validation 	 Epoch: 10 	 Loss: 0.119020
+
+[2020-07-20 16:50:10] - Training 	 Epoch: 11 	 Loss: 0.038199
+[2020-07-20 16:50:16] - Validation 	 Epoch: 11 	 Loss: 0.116658
+
+[2020-07-20 16:50:21] - Training 	 Epoch: 12 	 Loss: 0.033973
+[2020-07-20 16:50:23] - Validation 	 Epoch: 12 	 Loss: 0.088786
+
+[2020-07-20 16:50:28] - Training 	 Epoch: 13 	 Loss: 0.030454
+[2020-07-20 16:50:30] - Validation 	 Epoch: 13 	 Loss: 0.074902
+
+[2020-07-20 16:50:35] - Training 	 Epoch: 14 	 Loss: 0.027493
+[2020-07-20 16:50:37] - Validation 	 Epoch: 14 	 Loss: 0.075685
+
+[2020-07-20 16:50:42] - Training 	 Epoch: 15 	 Loss: 0.024968
+[2020-07-20 16:50:44] - Validation 	 Epoch: 15 	 Loss: 0.067643
+
+[2020-07-20 16:50:50] - Training 	 Epoch: 16 	 Loss: 0.022801
+[2020-07-20 16:50:52] - Validation 	 Epoch: 16 	 Loss: 0.072137
+
+[2020-07-20 16:50:56] - Training 	 Epoch: 17 	 Loss: 0.020920
+[2020-07-20 16:50:58] - Validation 	 Epoch: 17 	 Loss: 0.061783
+
+[2020-07-20 16:51:03] - Training 	 Epoch: 18 	 Loss: 0.019282
+[2020-07-20 16:51:05] - Validation 	 Epoch: 18 	 Loss: 0.053241
+
+[2020-07-20 16:51:10] - Training 	 Epoch: 19 	 Loss: 0.017832
+[2020-07-20 16:51:12] - Validation 	 Epoch: 19 	 Loss: 0.051585
+
+[2020-07-20 16:51:17] - Training 	 Epoch: 20 	 Loss: 0.016554
+[2020-07-20 16:51:19] - Validation 	 Epoch: 20 	 Loss: 0.048110
+
+[2020-07-20 16:51:23] - Training 	 Epoch: 21 	 Loss: 0.015414
+[2020-07-20 16:51:26] - Validation 	 Epoch: 21 	 Loss: 0.048079
+
+[2020-07-20 16:51:31] - Training 	 Epoch: 22 	 Loss: 0.014394
+[2020-07-20 16:51:34] - Validation 	 Epoch: 22 	 Loss: 0.039406
+
+[2020-07-20 16:51:39] - Training 	 Epoch: 23 	 Loss: 0.013478
+[2020-07-20 16:51:41] - Validation 	 Epoch: 23 	 Loss: 0.035736
+
+[2020-07-20 16:51:47] - Training 	 Epoch: 24 	 Loss: 0.012652
+[2020-07-20 16:51:49] - Validation 	 Epoch: 24 	 Loss: 0.036192
+
+[2020-07-20 16:51:54] - Training 	 Epoch: 25 	 Loss: 0.011905
+[2020-07-20 16:52:05] - Validation 	 Epoch: 25 	 Loss: 0.037536
+
+[2020-07-20 16:52:11] - Training 	 Epoch: 26 	 Loss: 0.011222
+[2020-07-20 16:52:13] - Validation 	 Epoch: 26 	 Loss: 0.037130
+
+[2020-07-20 16:52:20] - Training 	 Epoch: 27 	 Loss: 0.010599
+[2020-07-20 16:52:22] - Validation 	 Epoch: 27 	 Loss: 0.033244
+
+[2020-07-20 16:52:27] - Training 	 Epoch: 28 	 Loss: 0.010029
+[2020-07-20 16:52:29] - Validation 	 Epoch: 28 	 Loss: 0.030297
+
+[2020-07-20 16:52:47] - Training 	 Epoch: 29 	 Loss: 0.009506
+[2020-07-20 16:52:49] - Validation 	 Epoch: 29 	 Loss: 0.030036
+
+[2020-07-20 16:52:54] - Training 	 Epoch: 30 	 Loss: 0.009026
+[2020-07-20 16:52:57] - Validation 	 Epoch: 30 	 Loss: 0.025562
+
+[2020-07-20 16:53:02] - Training 	 Epoch: 31 	 Loss: 0.008581
+[2020-07-20 16:53:04] - Validation 	 Epoch: 31 	 Loss: 0.025139
+
+[2020-07-20 16:53:10] - Training 	 Epoch: 32 	 Loss: 0.008170
+[2020-07-20 16:53:12] - Validation 	 Epoch: 32 	 Loss: 0.023572
+
+[2020-07-20 16:53:17] - Training 	 Epoch: 33 	 Loss: 0.007787
+[2020-07-20 16:53:19] - Validation 	 Epoch: 33 	 Loss: 0.024045
+
+[2020-07-20 16:53:25] - Training 	 Epoch: 34 	 Loss: 0.007432
+[2020-07-20 16:53:28] - Validation 	 Epoch: 34 	 Loss: 0.022628
+
+[2020-07-20 16:53:33] - Training 	 Epoch: 35 	 Loss: 0.007103
+[2020-07-20 16:53:35] - Validation 	 Epoch: 35 	 Loss: 0.020346
+
+[2020-07-20 16:53:40] - Training 	 Epoch: 36 	 Loss: 0.006797
+[2020-07-20 16:53:42] - Validation 	 Epoch: 36 	 Loss: 0.020961
+
+[2020-07-20 16:53:47] - Training 	 Epoch: 37 	 Loss: 0.006508
+[2020-07-20 16:53:49] - Validation 	 Epoch: 37 	 Loss: 0.018807
+
+[2020-07-20 16:53:54] - Training 	 Epoch: 38 	 Loss: 0.006238
+[2020-07-20 16:53:56] - Validation 	 Epoch: 38 	 Loss: 0.019198
+
+[2020-07-20 16:54:02] - Training 	 Epoch: 39 	 Loss: 0.005984
+[2020-07-20 16:54:04] - Validation 	 Epoch: 39 	 Loss: 0.018564
+
+[2020-07-20 16:54:10] - Training 	 Epoch: 40 	 Loss: 0.005747
+[2020-07-20 16:54:12] - Validation 	 Epoch: 40 	 Loss: 0.017661
+
+[2020-07-20 16:54:32] - Training 	 Epoch: 41 	 Loss: 0.005523
+[2020-07-20 16:54:34] - Validation 	 Epoch: 41 	 Loss: 0.016975
+
+[2020-07-20 16:54:40] - Training 	 Epoch: 42 	 Loss: 0.005313
+[2020-07-20 16:54:41] - Validation 	 Epoch: 42 	 Loss: 0.016306
+
+[2020-07-20 16:54:46] - Training 	 Epoch: 43 	 Loss: 0.005114
+[2020-07-20 16:54:50] - Validation 	 Epoch: 43 	 Loss: 0.014864
+
+[2020-07-20 16:55:06] - Training 	 Epoch: 44 	 Loss: 0.004926
+[2020-07-20 16:55:08] - Validation 	 Epoch: 44 	 Loss: 0.013845
+
+[2020-07-20 16:55:13] - Training 	 Epoch: 45 	 Loss: 0.004749
+[2020-07-20 16:55:15] - Validation 	 Epoch: 45 	 Loss: 0.012985
+
+[2020-07-20 16:55:20] - Training 	 Epoch: 46 	 Loss: 0.004581
+[2020-07-20 16:55:21] - Validation 	 Epoch: 46 	 Loss: 0.013786
+
+[2020-07-20 16:55:27] - Training 	 Epoch: 47 	 Loss: 0.004422
+[2020-07-20 16:55:29] - Validation 	 Epoch: 47 	 Loss: 0.013752
+
+[2020-07-20 16:55:33] - Training 	 Epoch: 48 	 Loss: 0.004272
+[2020-07-20 16:55:35] - Validation 	 Epoch: 48 	 Loss: 0.012943
+
+[2020-07-20 16:55:40] - Training 	 Epoch: 49 	 Loss: 0.004128
+[2020-07-20 16:55:42] - Validation 	 Epoch: 49 	 Loss: 0.012159
+
+[2020-07-20 16:55:47] - Training 	 Epoch: 50 	 Loss: 0.003992
+[2020-07-20 16:55:49] - Validation 	 Epoch: 50 	 Loss: 0.012238
+
+[2020-07-20 16:56:12] - Training 	 Epoch: 51 	 Loss: 0.003863
+[2020-07-20 16:56:15] - Validation 	 Epoch: 51 	 Loss: 0.011871
+
+[2020-07-20 16:56:21] - Training 	 Epoch: 52 	 Loss: 0.003739
+[2020-07-20 16:56:24] - Validation 	 Epoch: 52 	 Loss: 0.011074
+
+[2020-07-20 16:56:30] - Training 	 Epoch: 53 	 Loss: 0.003622
+[2020-07-20 16:56:32] - Validation 	 Epoch: 53 	 Loss: 0.010815
+
+[2020-07-20 16:56:37] - Training 	 Epoch: 54 	 Loss: 0.003510
+[2020-07-20 16:56:39] - Validation 	 Epoch: 54 	 Loss: 0.010926
+
+[2020-07-20 16:56:45] - Training 	 Epoch: 55 	 Loss: 0.003402
+[2020-07-20 16:56:46] - Validation 	 Epoch: 55 	 Loss: 0.010802
+
+[2020-07-20 16:56:51] - Training 	 Epoch: 56 	 Loss: 0.003300
+[2020-07-20 16:56:54] - Validation 	 Epoch: 56 	 Loss: 0.009954
+
+[2020-07-20 16:56:59] - Training 	 Epoch: 57 	 Loss: 0.003202
+[2020-07-20 16:57:01] - Validation 	 Epoch: 57 	 Loss: 0.009863
+
+[2020-07-20 16:57:06] - Training 	 Epoch: 58 	 Loss: 0.003108
+[2020-07-20 16:57:08] - Validation 	 Epoch: 58 	 Loss: 0.009114
+
+[2020-07-20 16:57:14] - Training 	 Epoch: 59 	 Loss: 0.003018
+[2020-07-20 16:57:16] - Validation 	 Epoch: 59 	 Loss: 0.009195
+
+[2020-07-20 16:57:21] - Training 	 Epoch: 60 	 Loss: 0.002933
+[2020-07-20 16:57:23] - Validation 	 Epoch: 60 	 Loss: 0.008644
+
+[2020-07-20 16:57:29] - Training 	 Epoch: 61 	 Loss: 0.002849
+[2020-07-20 16:57:31] - Validation 	 Epoch: 61 	 Loss: 0.009080
+
+[2020-07-20 16:57:53] - Training 	 Epoch: 62 	 Loss: 0.002770
+[2020-07-20 16:57:55] - Validation 	 Epoch: 62 	 Loss: 0.008850
+
+[2020-07-20 16:58:00] - Training 	 Epoch: 63 	 Loss: 0.002694
+[2020-07-20 16:58:02] - Validation 	 Epoch: 63 	 Loss: 0.008077
+
+[2020-07-20 16:58:08] - Training 	 Epoch: 64 	 Loss: 0.002621
+[2020-07-20 16:58:10] - Validation 	 Epoch: 64 	 Loss: 0.008314
+
+[2020-07-20 16:58:15] - Training 	 Epoch: 65 	 Loss: 0.002551
+[2020-07-20 16:58:17] - Validation 	 Epoch: 65 	 Loss: 0.007919
+
+[2020-07-20 16:58:26] - Training 	 Epoch: 66 	 Loss: 0.002484
+[2020-07-20 16:58:39] - Validation 	 Epoch: 66 	 Loss: 0.007113
+
+[2020-07-20 16:58:45] - Training 	 Epoch: 67 	 Loss: 0.002418
+[2020-07-20 16:58:47] - Validation 	 Epoch: 67 	 Loss: 0.006818
+
+[2020-07-20 16:58:52] - Training 	 Epoch: 68 	 Loss: 0.002356
+[2020-07-20 16:58:54] - Validation 	 Epoch: 68 	 Loss: 0.007244
+
+[2020-07-20 16:58:59] - Training 	 Epoch: 69 	 Loss: 0.002296
+[2020-07-20 16:59:01] - Validation 	 Epoch: 69 	 Loss: 0.007006
+
+[2020-07-20 16:59:06] - Training 	 Epoch: 70 	 Loss: 0.002238
+[2020-07-20 16:59:08] - Validation 	 Epoch: 70 	 Loss: 0.006699
+
+[2020-07-20 16:59:14] - Training 	 Epoch: 71 	 Loss: 0.002182
+[2020-07-20 16:59:16] - Validation 	 Epoch: 71 	 Loss: 0.006702
+
+[2020-07-20 16:59:22] - Training 	 Epoch: 72 	 Loss: 0.002128
+[2020-07-20 16:59:23] - Validation 	 Epoch: 72 	 Loss: 0.006501
+
+[2020-07-20 16:59:29] - Training 	 Epoch: 73 	 Loss: 0.002076
+[2020-07-20 16:59:31] - Validation 	 Epoch: 73 	 Loss: 0.006322
+
+[2020-07-20 16:59:36] - Training 	 Epoch: 74 	 Loss: 0.002025
+[2020-07-20 16:59:38] - Validation 	 Epoch: 74 	 Loss: 0.006096
+
+[2020-07-20 16:59:43] - Training 	 Epoch: 75 	 Loss: 0.001977
+[2020-07-20 16:59:46] - Validation 	 Epoch: 75 	 Loss: 0.006031
+
+[2020-07-20 16:59:52] - Training 	 Epoch: 76 	 Loss: 0.001930
+[2020-07-20 16:59:54] - Validation 	 Epoch: 76 	 Loss: 0.005834
+
+[2020-07-20 16:59:59] - Training 	 Epoch: 77 	 Loss: 0.001884
+[2020-07-20 17:00:01] - Validation 	 Epoch: 77 	 Loss: 0.005550
+
+[2020-07-20 17:00:06] - Training 	 Epoch: 78 	 Loss: 0.001840
+[2020-07-20 17:00:25] - Validation 	 Epoch: 78 	 Loss: 0.005565
+
+[2020-07-20 17:00:31] - Training 	 Epoch: 79 	 Loss: 0.001798
+[2020-07-20 17:00:33] - Validation 	 Epoch: 79 	 Loss: 0.005384
+
+[2020-07-20 17:00:39] - Training 	 Epoch: 80 	 Loss: 0.001757
+[2020-07-20 17:00:40] - Validation 	 Epoch: 80 	 Loss: 0.005206
+
+[2020-07-20 17:00:46] - Training 	 Epoch: 81 	 Loss: 0.001717
+[2020-07-20 17:00:48] - Validation 	 Epoch: 81 	 Loss: 0.004978
+
+[2020-07-20 17:00:54] - Training 	 Epoch: 82 	 Loss: 0.001678
+[2020-07-20 17:00:57] - Validation 	 Epoch: 82 	 Loss: 0.005107
+
+[2020-07-20 17:01:04] - Training 	 Epoch: 83 	 Loss: 0.001641
+[2020-07-20 17:01:07] - Validation 	 Epoch: 83 	 Loss: 0.005049
+
+[2020-07-20 17:01:13] - Training 	 Epoch: 84 	 Loss: 0.001604
+[2020-07-20 17:01:15] - Validation 	 Epoch: 84 	 Loss: 0.004953
+
+[2020-07-20 17:01:21] - Training 	 Epoch: 85 	 Loss: 0.001569
+[2020-07-20 17:01:23] - Validation 	 Epoch: 85 	 Loss: 0.004927
+
+[2020-07-20 17:01:28] - Training 	 Epoch: 86 	 Loss: 0.001535
+[2020-07-20 17:01:30] - Validation 	 Epoch: 86 	 Loss: 0.004708
+
+[2020-07-20 17:01:35] - Training 	 Epoch: 87 	 Loss: 0.001502
+[2020-07-20 17:01:37] - Validation 	 Epoch: 87 	 Loss: 0.004449
+
+[2020-07-20 17:01:42] - Training 	 Epoch: 88 	 Loss: 0.001470
+[2020-07-20 17:01:44] - Validation 	 Epoch: 88 	 Loss: 0.004498
+
+[2020-07-20 17:01:50] - Training 	 Epoch: 89 	 Loss: 0.001439
+[2020-07-20 17:01:53] - Validation 	 Epoch: 89 	 Loss: 0.004295
+
+[2020-07-20 17:01:59] - Training 	 Epoch: 90 	 Loss: 0.001408
+[2020-07-20 17:02:01] - Validation 	 Epoch: 90 	 Loss: 0.004224
+
+[2020-07-20 17:02:10] - Training 	 Epoch: 91 	 Loss: 0.001379
+[2020-07-20 17:02:28] - Validation 	 Epoch: 91 	 Loss: 0.004136
+
+[2020-07-20 17:02:34] - Training 	 Epoch: 92 	 Loss: 0.001350
+[2020-07-20 17:02:36] - Validation 	 Epoch: 92 	 Loss: 0.003973
+
+[2020-07-20 17:02:42] - Training 	 Epoch: 93 	 Loss: 0.001322
+[2020-07-20 17:02:44] - Validation 	 Epoch: 93 	 Loss: 0.003921
+
+[2020-07-20 17:02:49] - Training 	 Epoch: 94 	 Loss: 0.001295
+[2020-07-20 17:02:52] - Validation 	 Epoch: 94 	 Loss: 0.003844
+
+[2020-07-20 17:02:57] - Training 	 Epoch: 95 	 Loss: 0.001269
+[2020-07-20 17:02:59] - Validation 	 Epoch: 95 	 Loss: 0.003762
+
+[2020-07-20 17:03:04] - Training 	 Epoch: 96 	 Loss: 0.001243
+[2020-07-20 17:03:06] - Validation 	 Epoch: 96 	 Loss: 0.003651
+
+[2020-07-20 17:03:12] - Training 	 Epoch: 97 	 Loss: 0.001219
+[2020-07-20 17:03:14] - Validation 	 Epoch: 97 	 Loss: 0.003550
+
+[2020-07-20 17:03:19] - Training 	 Epoch: 98 	 Loss: 0.001194
+[2020-07-20 17:03:21] - Validation 	 Epoch: 98 	 Loss: 0.003635
+
+[2020-07-20 17:03:27] - Training 	 Epoch: 99 	 Loss: 0.001171
+[2020-07-20 17:03:29] - Validation 	 Epoch: 99 	 Loss: 0.003514
+
+
+[2020-07-20 17:03:29] - Evaluation: <class 'algorithms.lstm.LSTM_CAE_tile_by_tile.CAE'>
+[2020-07-20 17:03:32] - Evaluation 	 Epoch: 0 	 Loss: 0.003421
+
+[2020-07-20 17:03:32] - Saved model as caelstm_section_cae_training_uniform_random_fill_1000_house_1000_block_1000_model
+[2020-07-20 17:03:32] - Model: CAE(
+  (encoder): CAEEncoder(
+    (conv1): Conv2d(1, 64, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+    (bn1): BatchNorm2d(64, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+    (conv2): Conv2d(64, 32, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+    (bn2): BatchNorm2d(32, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+    (conv3): Conv2d(32, 16, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+    (bn3): BatchNorm2d(16, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+    (conv4): Conv2d(16, 8, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+    (bn4): BatchNorm2d(8, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+    (latent_linear): Linear(in_features=128, out_features=100, bias=True)
+    (bn_latent): BatchNorm1d(100, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+  )
+  (decoder): CAEDecoder(
+    (latent_linear): Linear(in_features=100, out_features=128, bias=True)
+    (bn_latent): BatchNorm1d(128, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+    (deconv1): ConvTranspose2d(8, 16, kernel_size=(2, 2), stride=(2, 2))
+    (bn1): BatchNorm2d(16, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+    (deconv2): ConvTranspose2d(16, 32, kernel_size=(2, 2), stride=(2, 2))
+    (bn2): BatchNorm2d(32, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+    (deconv3): ConvTranspose2d(32, 64, kernel_size=(2, 2), stride=(2, 2))
+    (bn3): BatchNorm2d(64, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+    (deconv4): ConvTranspose2d(64, 1, kernel_size=(2, 2), stride=(2, 2))
+    (bn4): BatchNorm2d(1, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+  )
+)
+[2020-07-20 17:03:32] - Model loss: 0.003421053057536483

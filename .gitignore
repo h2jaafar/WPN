@@ -166,20 +166,19 @@ src/gui_config.pickle
 
 src/resources/maps/house_10000
 src/resources/maps/block_map_10000
-src/resources/maps/block_map_1000
-src/resources/maps/block_map_100
-src/resources/maps/block_map_10
-src/resources/maps/house_1000
-src/resources/maps/house_10000
-src/resources/maps/house_1000
-src/resources/maps/house_100
-src/resources/maps/uniform_random_fill_10000
-src/resources/maps/uniform_random_fill_1000
-src/resources/maps/uniform_random_fill_100
-src/resources/images/*
-src/resources/algorithms/*
-src/resources/screenshots/*
-src/resources/datasets/*
+resources/maps/block_map_1000/
+src/resources/maps/block_map_1000/
+
+
+src/resources/maps/block_map_100/
+src/resources/maps/block_map_10/
+src/resources/maps/house_1000/
+src/resources/maps/house_10000/
+src/resources/maps/house_1000/
+src/resources/maps/house_100/
+src/resources/maps/uniform_random_fill_10000/
+src/resources/maps/uniform_random_fill_1000/
+src/resources/maps/uniform_random_fill_100/
 
 
 src/resources/maps/house_10/0.pickle
@@ -196,3 +195,7 @@ src/resources/maps/house_10/9.pickle
 .vscode/settings.json
 .vscode/launch.json
 gui_config.pickle
+src/pb_workspace.code-workspace
+src/resources/maps/
+src/resources/vin_maps/
+

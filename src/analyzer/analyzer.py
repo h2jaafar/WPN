@@ -419,27 +419,28 @@ class Analyzer:
         self.__analysis_stream = StringIO()
         maps: List[Map] = []
 
-        for i in range(10):
-            maps.append("uniform_random_fill_10000/" + str(i))
-            maps.append("block_map_10000/" + str(i))
-            maps.append("house_10000/" + str(i))
+        for i in range(300): #Maps are here:!! TODO: Here
+            maps.append("mixed_test_maps_300/" + str(i))
+            # maps.append("uniform_random_fill_10000/" + str(i))
+            # maps.append("block_map_10000/" + str(i))
+            # maps.append("house_10000/" + str(i))
 
         maps = self.__convert_maps(maps)
         # maps = [Maps.grid_map_labyrinth, Maps.grid_map_labyrinth2]
 
         algorithms: List[Tuple[Type[Algorithm], Type[BasicTesting], Tuple[list, dict]]] = [
             (AStar, AStarTesting, ([], {})),
-            (OnlineLSTM, BasicTesting, ([], {"load_name": "tile_by_tile_training_uniform_random_fill_10000_model"})),
-            (OnlineLSTM, BasicTesting, ([], {"load_name": "tile_by_tile_training_block_map_10000_model"})),
-            (OnlineLSTM, BasicTesting, ([], {"load_name": "tile_by_tile_training_house_10000_model"})),
-            (OnlineLSTM, BasicTesting, ([], {"load_name": "tile_by_tile_training_uniform_random_fill_10000_block_map_10000_model"})),
-            (OnlineLSTM, BasicTesting, ([], {"load_name": "tile_by_tile_training_uniform_random_fill_10000_block_map_10000_house_10000_model"})),
-            (OnlineLSTM, BasicTesting, ([], {"load_name": "caelstm_section_lstm_training_uniform_random_fill_10000_model"})),
-            (OnlineLSTM, BasicTesting, ([], {"load_name": "caelstm_section_lstm_training_block_map_10000_model"})),
-            (OnlineLSTM, BasicTesting, ([], {"load_name": "caelstm_section_lstm_training_house_10000_model"})),
-            (OnlineLSTM, BasicTesting, ([], {"load_name": "caelstm_section_lstm_training_uniform_random_fill_10000_block_map_10000_model"})),
-            (OnlineLSTM, BasicTesting, ([], {"load_name": "caelstm_section_lstm_training_uniform_random_fill_10000_block_map_10000_house_10000_model"})),
-            (CombinedOnlineLSTM, CombinedOnlineLSTMTesting, ([], {})),
+            # (OnlineLSTM, BasicTesting, ([], {"load_name": "tile_by_tile_training_uniform_random_fill_10000_model"})),
+            # (OnlineLSTM, BasicTesting, ([], {"load_name": "tile_by_tile_training_block_map_10000_model"})),
+            # (OnlineLSTM, BasicTesting, ([], {"load_name": "tile_by_tile_training_house_10000_model"})),
+            # (OnlineLSTM, BasicTesting, ([], {"load_name": "tile_by_tile_training_uniform_random_fill_10000_block_map_10000_model"})),
+            # (OnlineLSTM, BasicTesting, ([], {"load_name": "tile_by_tile_training_uniform_random_fill_10000_block_map_10000_house_10000_model"})),
+            # (OnlineLSTM, BasicTesting, ([], {"load_name": "caelstm_section_lstm_training_uniform_random_fill_10000_model"})),
+            # (OnlineLSTM, BasicTesting, ([], {"load_name": "caelstm_section_lstm_training_block_map_10000_model"})),
+            # (OnlineLSTM, BasicTesting, ([], {"load_name": "caelstm_section_lstm_training_house_10000_model"})),
+            # (OnlineLSTM, BasicTesting, ([], {"load_name": "caelstm_section_lstm_training_uniform_random_fill_10000_block_map_10000_model"})),
+            # (OnlineLSTM, BasicTesting, ([], {"load_name": "caelstm_section_lstm_training_uniform_random_fill_10000_block_map_10000_house_10000_model"})),
+            # (CombinedOnlineLSTM, CombinedOnlineLSTMTesting, ([], {})),
             (WayPointNavigation, WayPointNavigationTesting, ([], {"global_kernel_max_it": 20, "global_kernel": (OnlineLSTM, ([], {"load_name": "caelstm_section_lstm_training_block_map_10000_model"}))})),
             (WayPointNavigation, WayPointNavigationTesting, ([], {"global_kernel_max_it": 20, "global_kernel": (OnlineLSTM, ([], {"load_name": "tile_by_tile_training_uniform_random_fill_10000_block_map_10000_house_10000_model"}))})),
             (WayPointNavigation, WayPointNavigationTesting, ([], {"global_kernel_max_it": 20, "global_kernel": (CombinedOnlineLSTM, ([], {}))})),
@@ -459,17 +460,17 @@ class Analyzer:
 
         algorithm_names: List[str] = [
             "A*",
-            "Online LSTM on uniform_random_fill_10000 (paper solution)",
-            "Online LSTM on block_map_10000",
-            "Online LSTM on house_10000",
-            "Online LSTM on uniform_random_fill_10000_block_map_10000",
-            "Online LSTM on uniform_random_fill_10000_block_map_10000_house_10000",
-            "CAE Online LSTM on uniform_random_fill_10000",
-            "CAE Online LSTM on block_map_10000 (paper solution)",
-            "CAE Online LSTM on house_10000",
-            "CAE Online LSTM on uniform_random_fill_10000_block_map_10000",
-            "CAE Online LSTM on uniform_random_fill_10000_block_map_10000_house_10000",
-            "Combined Online LSTM (proposed solution)",
+            # "Online LSTM on uniform_random_fill_10000 (paper solution)",
+            # "Online LSTM on block_map_10000",
+            # "Online LSTM on house_10000",
+            # "Online LSTM on uniform_random_fill_10000_block_map_10000",
+            # "Online LSTM on uniform_random_fill_10000_block_map_10000_house_10000",
+            # "CAE Online LSTM on uniform_random_fill_10000",
+            # "CAE Online LSTM on block_map_10000 (paper solution)",
+            # "CAE Online LSTM on house_10000",
+            # "CAE Online LSTM on uniform_random_fill_10000_block_map_10000",
+            # "CAE Online LSTM on uniform_random_fill_10000_block_map_10000_house_10000",
+            # "Combined Online LSTM (proposed solution)",
             "WayPointNavigation with local kernel: A* and global kernel: CAE Online LSTM on block_map_10000 (paper solution)",
             "WayPointNavigation with local kernel: A* and global kernel: Online LSTM on uniform_random_fill_10000_block_map_10000_house_10000 (paper solution)",
             "WayPointNavigation with local kernel: A* and global kernel: Combined Online LSTM (proposed solution)",
@@ -504,23 +505,33 @@ class Analyzer:
             algorithm_results[idx] = res
         self.__tabulate_results(algorithms, algorithm_results, with_indexing=True)
 
+
+###Complex Analysis here! (Below)
         maps: List[Map] = [
             # Maps.pixel_map_one_obstacle.convert_to_dense_map(),
-            "uniform_random_fill_10/0",
-            "block_map_10/6",
-            "house_10/6",
-            Maps.grid_map_labyrinth,
-            Maps.grid_map_labyrinth2,
-            Maps.grid_map_one_obstacle.convert_to_dense_map(),
+            "block_map_1100/8"
+            "block_map_1100/9"
+            "block_map_1100/10"
+            
+            # "uniform_random_fill_10/0",
+            # "block_map_10/6",
+            # "house_10/6",
+            # Maps.grid_map_labyrinth,
+            # Maps.grid_map_labyrinth2,
+            # Maps.grid_map_one_obstacle.convert_to_dense_map(),
         ]
 
         map_names: List[str] = [
-            "uniform_random_fill_10/0",
-            "block_map_10/6",
-            "house_10/6",
-            "Maps.grid_map_labyrinth",
-            "Maps.grid_map_labyrinth2",
-            "Maps.grid_map_one_obstacle.convert_to_dense_map()",
+            "block_map_1100/8"
+            "block_map_1100/9"
+            "block_map_1100/10"
+            
+            # "uniform_random_fill_10/0",
+            # "block_map_10/6",
+            # "house_10/6",
+            # "Maps.grid_map_labyrinth",
+            # "Maps.grid_map_labyrinth2",
+            # "Maps.grid_map_one_obstacle.convert_to_dense_map()",
         ]
 
         maps = self.__convert_maps(maps)
