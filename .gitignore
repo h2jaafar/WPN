@@ -198,4 +198,5 @@ gui_config.pickle
 src/pb_workspace.code-workspace
 src/resources/maps/
 src/resources/vin_maps/
+src/resources/training_data/
 
