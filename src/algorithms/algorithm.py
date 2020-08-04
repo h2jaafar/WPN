@@ -61,6 +61,7 @@ class Algorithm(ABC):
         """
         if self.testing is not None:
             self.testing.algorithm_start()
+        # print('Finding path 64')
         self._find_path_internal()
         if self.testing is not None:
             self.testing.algorithm_done()

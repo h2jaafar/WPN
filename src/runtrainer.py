@@ -62,7 +62,8 @@ maps = {
     "SLAM Map 1 (compressed)": ("map11", True),
     "SLAM Map 2": ("map14", False),
     "SLAM Map 3": ("map12", False),
-    "House Expo Sample": ("_house_expo/10",False)
+    "House Expo Sample": ("_house_expo/10",False),
+    "Block 8x8": ('block_map_100/20',True)
     }
 
 #LSTM Bagging is referred to as CombinedOnlineLSTM, it is used as a glboal kernel for LWP
@@ -72,8 +73,10 @@ algorithms = {
     "A*": (AStar, AStarTesting, ([], {})),
     "Global Way-point LSTM": (WayPointNavigation, WayPointNavigationTesting, ([], {"global_kernel": (CombinedOnlineLSTM, ([], {})), "global_kernel_max_it": 100})),
     "LSTM Bagging": (CombinedOnlineLSTM, CombinedOnlineLSTMTesting, ([], {})),
-    "CAE Online LSTM": (OnlineLSTM, BasicTesting, ([], {"load_name": "caelstm_section_cae_training_uniform_random_fill_1000_house_1000_block_1000_model"})),
-    "Online LSTM": (OnlineLSTM, BasicTesting, ([], {"load_name": "tile_by_tile_training_uniform_random_fill_1000_block_1000_house_1000_model"})),
+    #TODO: Fix error when trying to load the other trained model 
+    #"CAE Online LSTM": (OnlineLSTM, BasicTesting, ([], {"load_name": "caelstm_section_cae_training_uniform_random_fill_1000_house_1000_block_1000_model"})),
+    "CAE Online LSTM": (OnlineLSTM, BasicTesting, ([], {"load_name": "caelstm_section_lstm_training_block_map_10000_model"})), 
+    "Online LSTM": (OnlineLSTM, BasicTesting, ([], {"load_name": "tile_by_tile_training_uniform_random_fill_10000_block_map_10000_model"})),
     "SPRM": (SPRM, BasicTesting, ([], {})),
     "RT": (RT, BasicTesting, ([], {})),
     "RRT": (RRT, BasicTesting, ([], {})),
@@ -119,19 +122,19 @@ labelling = {
 
 
 #Input hyperparametres here 
-chosen_map = 'House'
+chosen_map = 'Block'
 algo = algorithms['A*'] #Choose which planner 
 ani = animations['Fast'] #Choose animation speed
 debug = debug['High'] #Choose debug level 
 training_algo = BasicLSTMModule #Chooses the algorithm to train, either CAE, BasicLSTMModule,LSTMCAEModel
-nbr_ex = 30000 #Number of maps generated
+nbr_ex = 1000 #Number of maps generated
 show_sample_map = False #shows 5 samples
-gen_start = True
+gen_start = False
 train_start = False 
 sim_start = False
 config.generator_house_expo = False
-analyzer_start = False
-config.generator_size = 8 # Change the size of the maps generated
+analyzer_start = True
+config.generator_size = 64 # Change the size of the maps generated
 
 
 #Cache
@@ -158,7 +161,7 @@ if config.generator_house_expo:
     
 elif gen_start:
     gen_map = gen_maps[chosen_map]
-    #config.generator_labelling_atlases = ['uniform_random_fill_1000','block_1000','house_1000']
+    #config.generator_labelling_atlases = ['uniform_random_fill_50000','block_map_50000','house_50000']
     config.generator_labelling_atlases = [gen_map + '_' + str(nbr_ex)]
     config.generator_nr_of_examples = nbr_ex
     config.generator_gen_type = gen_map

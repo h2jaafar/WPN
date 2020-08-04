@@ -21,6 +21,7 @@ from torchvision import transforms, datasets
 
 
 
+
 class CAEEncoder(nn.Module):
     def __init__(self, latent_dim: int):
         super().__init__()
@@ -134,7 +135,7 @@ class CAE(MLModel):
                               test_results: EvaluationResults) -> None:
         super().show_training_results(training_results, validation_results, test_results)
 
-        def convert_map_sample(mp_name, idx):
+        def convert_map_sample(mp_name, idx): #:TODO: Might be here
             if any(map(lambda t: mp_name in t, self.config["training_data"])):
                 mp = self._services.resources.maps_dir.load(mp_name + "_10/" + str(idx))
                 features = MapProcessing.extract_features(mp, self.config["data_single_features"])

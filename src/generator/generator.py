@@ -620,8 +620,8 @@ class Generator:
                 "agent" : [mp.agent.position.x, mp.agent.position.y],
                 "grid" : mp.grid 
             }
-            if json_save: 
-                with open('./resources/vin_maps/16x16/1000/house/'+ str(_+1000) + '.json', 'w') as outfile:
+            if json_save: #Add the path you want the JSOns to save to 
+                with open('/home/hussein/Desktop/git-projects/hjaafar_vin/value-iteration-networks-pb/resources/test_maps/64x64/'+ str(_+2000) + '.json', 'w') as outfile:
                     json.dump(map_as_dict,outfile)
                     self.__services.debug.write("Dumping JSON: " + str(_) + "\n", DebugLevel.LOW)
 
@@ -848,17 +848,18 @@ class Generator:
                 maps = generator.generate_maps(m.main_services.settings.generator_nr_of_examples, Size(8, 8),
                                         m.main_services.settings.generator_gen_type, [0.1, 0.2], [1, 2], [3,4], [5, 7],json_save = True)
 
-            if m.main_services.settings.generator_size == 16:
+            elif m.main_services.settings.generator_size == 16:
                 maps = generator.generate_maps(m.main_services.settings.generator_nr_of_examples, Size(16, 16),
                                         m.main_services.settings.generator_gen_type, [0.1, 0.2], [1, 4], [4,6], [8, 11],json_save = True)
 
-            if m.main_services.settings.generator_size == 28:
+            elif m.main_services.settings.generator_size == 28:
                 maps = generator.generate_maps(m.main_services.settings.generator_nr_of_examples, Size(28, 28),
                                         m.main_services.settings.generator_gen_type, [0.1, 0.3], [1, 4], [6,10], [14, 22],json_save = True)
 
-            else:
+            elif m.main_services.settings.generator_size == 64 :
                 maps = generator.generate_maps(m.main_services.settings.generator_nr_of_examples, Size(64, 64),
-                                        m.main_services.settings.generator_gen_type, [0.1, 0.3], [1, 6], [8,15], [35, 45],json_save = False)
+                                        m.main_services.settings.generator_gen_type, [0.1, 0.3], [1, 6], [8,15], [35, 45],json_save = True)
+                print('In the 64 seciton')
 
         #This will display 5 of the maps generated
         if m.main_services.settings.generator_show_gen_sample and not m.main_services.settings.generator_house_expo:
@@ -886,10 +887,10 @@ class Generator:
             #                      m.main_services.settings.generator_single_labelling_features,
             #                      m.main_services.settings.generator_single_labelling_labels)
      
-        else: #TODO: UNHIGHLIGHT THIS
+        # else: #TODO: UNHIGHLIGHT THIS
             
-            generator.label_maps(m.main_services.settings.generator_labelling_atlases,
-                                 m.main_services.settings.generator_labelling_features,
-                                 m.main_services.settings.generator_labelling_labels,
-                                 m.main_services.settings.generator_single_labelling_features,
-                                 m.main_services.settings.generator_single_labelling_labels)
+        #     generator.label_maps(m.main_services.settings.generator_labelling_atlases,
+        #                          m.main_services.settings.generator_labelling_features,
+        #                          m.main_services.settings.generator_labelling_labels,
+        #                          m.main_services.settings.generator_single_labelling_features,
+        #                          m.main_services.settings.generator_single_labelling_labels)

@@ -1,0 +1,76 @@
+ 
+[2020-08-03 11:59:30] - Starting basic analysis: number of maps = 3000, number of algorithms = 4
+
+[2020-08-03 11:59:30] - 0. A*
+[2020-08-03 11:59:49] - Rate of success: 97.67%, (A*: 97.67%), (Improvement: 0%)
+[2020-08-03 11:59:49] - Average total steps: 18.4, (A*: 18.4), (Improvement: 0%)
+[2020-08-03 11:59:49] - Average total distance: 9.64, (A*: 9.64), (Improvement: 0%)
+[2020-08-03 11:59:49] - Average time: 0.0029 seconds, (A*: 0.0029 seconds), (Improvement: 0%)
+[2020-08-03 11:59:49] - Average distance from goal: 0.25, (A*: 0.25), (Improvement: 0%) (Average original distance from goal: 8.49)
+[2020-08-03 11:59:49] - Average search space (no fringe): 7.87%
+[2020-08-03 11:59:49] - Average fringe: 10.1%
+[2020-08-03 11:59:49] - Average total search space: 17.97%
+
+
+[2020-08-03 11:59:49] - 1. WayPointNavigation with local kernel: A* and global kernel: CAE Online LSTM on block_map_10000 (paper solution)
+[2020-08-03 12:02:23] - Rate of success: 97.67%, (A*: 97.67%), (Improvement: 0%)
+[2020-08-03 12:02:23] - Average total steps: 33.31, (A*: 18.4), (Improvement: -81.03%)
+[2020-08-03 12:02:23] - Average total distance: 10.36, (A*: 9.64), (Improvement: -7.47%)
+[2020-08-03 12:02:23] - Average time: 0.0476 seconds, (A*: 0.0029 seconds), (Improvement: -1541.38%)
+[2020-08-03 12:02:23] - Average distance from goal: 0.2, (A*: 0.25), (Improvement: 20.0%) (Average original distance from goal: 8.49)
+[2020-08-03 12:02:23] - Average number of way points: 2.49
+[2020-08-03 12:02:23] - Average number of global kernel steps: 13.39
+[2020-08-03 12:02:23] - Average global kernel distance: 7.01
+[2020-08-03 12:02:23] - Average last way point distance to goal: 2.43
+[2020-08-03 12:02:23] - Average number of global kernel calls: 1.49
+[2020-08-03 12:02:23] - Average global kernel improvement: 76.56%
+[2020-08-03 12:02:23] - Average way point in-between distance: 5.25
+[2020-08-03 12:02:23] - Average local kernel all search space (no fringe): 6.9%, (A*: 7.87%), (Improvement: 12.33%)
+[2020-08-03 12:02:23] - Average local kernel all fringe: 9.88%, (A*: 10.1%), (Improvement: 2.18%)
+[2020-08-03 12:02:23] - Average local kernel all total search space: 16.78%, (A*: 17.97%), (Improvement: 6.62%)
+[2020-08-03 12:02:23] - Average local kernel session search space (no fringe): 2.81%, (A*: 7.87%), (Improvement: 64.29%)
+[2020-08-03 12:02:23] - Average local kernel session fringe: 4.64%, (A*: 10.1%), (Improvement: 54.06%)
+[2020-08-03 12:02:23] - Average local kernel session total search space: 7.45%, (A*: 17.97%), (Improvement: 58.54%)
+
+
+[2020-08-03 12:02:23] - 2. WayPointNavigation with local kernel: A* and global kernel: Online LSTM on uniform_random_fill_10000_block_map_10000_house_10000 (paper solution)
+[2020-08-03 12:03:50] - Rate of success: 97.67%, (A*: 97.67%), (Improvement: 0%)
+[2020-08-03 12:03:50] - Average total steps: 33.46, (A*: 18.4), (Improvement: -81.85%)
+[2020-08-03 12:03:50] - Average total distance: 10.58, (A*: 9.64), (Improvement: -9.75%)
+[2020-08-03 12:03:50] - Average time: 0.0254 seconds, (A*: 0.0029 seconds), (Improvement: -775.86%)
+[2020-08-03 12:03:50] - Average distance from goal: 0.17, (A*: 0.25), (Improvement: 32.0%) (Average original distance from goal: 8.49)
+[2020-08-03 12:03:50] - Average number of way points: 2.22
+[2020-08-03 12:03:50] - Average number of global kernel steps: 16.93
+[2020-08-03 12:03:50] - Average global kernel distance: 9.18
+[2020-08-03 12:03:50] - Average last way point distance to goal: 0.82
+[2020-08-03 12:03:50] - Average number of global kernel calls: 1.22
+[2020-08-03 12:03:50] - Average global kernel improvement: 92.56%
+[2020-08-03 12:03:50] - Average way point in-between distance: 7.37
+[2020-08-03 12:03:50] - Average local kernel all search space (no fringe): 7.61%, (A*: 7.87%), (Improvement: 3.3%)
+[2020-08-03 12:03:50] - Average local kernel all fringe: 9.81%, (A*: 10.1%), (Improvement: 2.87%)
+[2020-08-03 12:03:50] - Average local kernel all total search space: 17.42%, (A*: 17.97%), (Improvement: 3.06%)
+[2020-08-03 12:03:50] - Average local kernel session search space (no fringe): 3.45%, (A*: 7.87%), (Improvement: 56.16%)
+[2020-08-03 12:03:50] - Average local kernel session fringe: 5.11%, (A*: 10.1%), (Improvement: 49.41%)
+[2020-08-03 12:03:50] - Average local kernel session total search space: 8.57%, (A*: 17.97%), (Improvement: 52.31%)
+
+
+[2020-08-03 12:03:50] - 3. WayPointNavigation with local kernel: A* and global kernel: Combined Online LSTM (proposed solution)
+[2020-08-03 12:18:07] - Rate of success: 97.67%, (A*: 97.67%), (Improvement: 0%)
+[2020-08-03 12:18:07] - Average total steps: 32.09, (A*: 18.4), (Improvement: -74.4%)
+[2020-08-03 12:18:07] - Average total distance: 10.13, (A*: 9.64), (Improvement: -5.08%)
+[2020-08-03 12:18:07] - Average time: 0.2708 seconds, (A*: 0.0029 seconds), (Improvement: -9237.93%)
+[2020-08-03 12:18:07] - Average distance from goal: 0.17, (A*: 0.25), (Improvement: 32.0%) (Average original distance from goal: 8.49)
+[2020-08-03 12:18:07] - Average number of way points: 2.15
+[2020-08-03 12:18:07] - Average number of global kernel steps: 17.75
+[2020-08-03 12:18:07] - Average global kernel distance: 9.72
+[2020-08-03 12:18:07] - Average last way point distance to goal: 0.35
+[2020-08-03 12:18:07] - Average number of global kernel calls: 1.15
+[2020-08-03 12:18:07] - Average global kernel improvement: 98.04%
+[2020-08-03 12:18:07] - Average way point in-between distance: 7.99
+[2020-08-03 12:18:07] - Average local kernel all search space (no fringe): 7.71%, (A*: 7.87%), (Improvement: 2.03%)
+[2020-08-03 12:18:07] - Average local kernel all fringe: 9.51%, (A*: 10.1%), (Improvement: 5.84%)
+[2020-08-03 12:18:07] - Average local kernel all total search space: 17.22%, (A*: 17.97%), (Improvement: 4.17%)
+[2020-08-03 12:18:07] - Average local kernel session search space (no fringe): 3.64%, (A*: 7.87%), (Improvement: 53.75%)
+[2020-08-03 12:18:07] - Average local kernel session fringe: 5.18%, (A*: 10.1%), (Improvement: 48.71%)
+[2020-08-03 12:18:07] - Average local kernel session total search space: 8.83%, (A*: 17.97%), (Improvement: 50.86%)
+[2020-08-03 12:18:07] - Global kernel kernels: ['caelstm_section_lstm_training_block_map_10000_model', 'caelstm_section_lstm_training_uniform_random_fill_10000_model', 'caelstm_section_lstm_training_house_10000_model', 'caelstm_section_lstm_training_uniform_random_fill_10000_block_map_10000_house_10000_model', 'caelstm_section_lstm_training_uniform_random_fill_10000_block_map_10000_model', 'tile_by_tile_training_uniform_random_fill_10000_model', 'tile_by_tile_training_block_map_10000_model', 'tile_by_tile_training_house_10000_model', 'tile_by_tile_training_uniform_random_fill_10000_block_map_10000_model', 'tile_by_tile_training_uniform_random_fill_10000_block_map_10000_house_10000_model']%

@@ -1,5 +1,8 @@
 import copy
 from threading import Thread
+# from pathos.multiprocessing  import Process,Queue
+#import torch.multiprocessing as multip
+import multiprocess as multip
 from typing import List, Tuple, Optional, Set
 
 from algorithms.algorithm import Algorithm
@@ -13,6 +16,7 @@ from simulator.views.map_displays.online_lstm_map_display import OnlineLSTMMapDi
 from simulator.views.map_displays.solid_color_map_display import SolidColorMapDisplay
 from structures import Point
 
+import datetime
 
 class CombinedOnlineLSTM(Algorithm):
     kernel_names: List[str]
@@ -21,11 +25,12 @@ class CombinedOnlineLSTM(Algorithm):
 
     __active_kernel: Optional[AlgorithmRunner]
     __total_path: Set[Point]
-
+    t = datetime.datetime.now()
     def __init__(self, services: Services, testing: BasicTesting = None, kernel_names: List["str"] = None,
-                 max_it: float = float('inf'), threaded: bool = False):
+                 max_it: float = float('inf'), threaded: bool = False): #Changed threaded to true
         super().__init__(services, testing)
-
+        #print(datetime.datetime.now(), ' Line 28')
+        # print('\n')
         if not kernel_names:
             self.kernel_names = [
                 "caelstm_section_lstm_training_block_map_10000_model",
@@ -50,14 +55,14 @@ class CombinedOnlineLSTM(Algorithm):
 
     def set_display_info(self):
         active_kernel_displays = []
-
+        #print(datetime.datetime.now(), ' Line 53')
         if self.__active_kernel:
             active_kernel_displays = [
                 # *self.__active_kernel.instance.set_display_info(),
                 OnlineLSTMMapDisplay(self._services, custom_map=self.__active_kernel.map),
                 EntitiesMapDisplay(self._services, custom_map=self.__active_kernel.map),
             ]
-
+        #print(datetime.datetime.now(), ' Line 60')
         return super().set_display_info() + [
             *active_kernel_displays,
             SolidColorMapDisplay(self._services, self.__total_path, (0, 150, 0), z_index=80),
@@ -65,6 +70,7 @@ class CombinedOnlineLSTM(Algorithm):
 
     # TODO when max_it is inf take the solution where we are closer to the goal or implement special case
     def _find_path_internal(self) -> None:
+        #print(datetime.datetime.now(), ' Line 68')
         kernels: List[Tuple[int, AlgorithmRunner]] = list(map(lambda kernel: (kernel[0],
                                                                               self._services.algorithm.get_new_runner(
                                                                                   copy.deepcopy(self._get_grid()),
@@ -75,22 +81,40 @@ class CombinedOnlineLSTM(Algorithm):
                                                                                   BasicTesting,
                                                                                   with_animations=True)),
                                                               enumerate(self.kernel_names)))
-
+        #print('Kernels ', kernels)
+        
+        #TODO: HANGS here
+        # print('Line 86')
         if self._threaded:
-            threaded_jobs: List[Thread] = list(
-                map(lambda kernel: Thread(target=kernel[1].find_path, daemon=True), kernels))
-
+            threaded_jobs: List[multip.Process] = list(
+                map(lambda kernel: multip.Process(target=kernel[1].find_path, daemon=False), kernels))
+            print(datetime.datetime.now(), ' Line 85')
+            print('Threaded Jobs: ', threaded_jobs)
+            multip.set_start_method('spawn')
+            
+            i = 0
             for j in threaded_jobs:
+                i+=1 
+                print('\n Started # ',i, j)
                 j.start()
-
+                # j.join()
+            i = 0
             for j in threaded_jobs:
+                i+=1
+                print('\n Joined # ',i, j)
                 j.join()
-        else:
+        else: #It goes here #TODO: Figure out why it hangs
+            #print('Kernels: ',kernels) #iterates through 10 kernels (max it = 10)
             for k in kernels:
-                self.__active_kernel = k[1]
-                k[1].find_path()
+                #print('kernel is ', k) #Kernel is tuple with a number (0-10) and the algorithm ()?
+                self.__active_kernel = k[1] #Problem is next three lines
+                # self.t1 = datetime.datetime.now()
+                k[1].find_path() #HANGS HERE!!! This takes 0.2 seconds
+                # self.t2 = datetime.datetime.now()
+                # print('Time: ', (self.t2-self.t1))
                 self.__total_path = self.__total_path.union(set(map(lambda el: el.position, k[1].map.trace)))
-
+        # print(datetime.datetime.now(), ' Line 96')
+        # print('Gets to line 114')
         self.__active_kernel = None
 
         # check if any found path and if they did take smallest dist
@@ -99,6 +123,7 @@ class CombinedOnlineLSTM(Algorithm):
         for kernel in kernels:
             if kernel[1].map.is_goal_reached(kernel[1].map.agent.position):
                 best_kernels.append(kernel)
+        #print(datetime.datetime.now(), ' Line 106')
 
         # take smallest dist kernel if any
         dist: float = float("inf")
@@ -107,20 +132,23 @@ class CombinedOnlineLSTM(Algorithm):
             if dist > len(kernel[1].map.trace):
                 dist = len(kernel[1].map.trace)
                 best_kernel = kernel
-
+        # print(datetime.datetime.now(), ' Line 115')
         if best_kernel:
             best_kernel[1].map.replay_trace(self.__replay)
         else:
             # pick the one with furthest progress
             dist = -1
             best_kernel = None
+            #print('Kernels', kernels)
             for kernel in kernels:
+                #print('Kernel', kernel)
                 if dist < len(kernel[1].map.trace):
                     dist = len(kernel[1].map.trace)
                     best_kernel = kernel
-
+            # print(datetime.datetime.now(), ' Line 126')
             best_kernel[1].map.replay_trace(self.__replay)
         self.kernel_call_idx = best_kernel[0]
+        # print(datetime.datetime.now(), ' Line 133')
 
     def __replay(self, m: Map) -> None:
         self.move_agent(m.agent.position)

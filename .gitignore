@@ -200,3 +200,6 @@ src/resources/maps/
 src/resources/vin_maps/
 src/resources/training_data/
 
+src/resources/maps/
+src/resources/training_data/training_house_1000.pickle
+src/resources/training_data/training_uniform_random_fill_1000.pickle

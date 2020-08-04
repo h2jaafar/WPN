@@ -419,11 +419,11 @@ class Analyzer:
         self.__analysis_stream = StringIO()
         maps: List[Map] = []
 
-        for i in range(300): #Maps are here:!! TODO: Here
-            maps.append("mixed_test_maps_300/" + str(i))
-            # maps.append("uniform_random_fill_10000/" + str(i))
-            # maps.append("block_map_10000/" + str(i))
-            # maps.append("house_10000/" + str(i))
+        for i in range(1000): 
+            maps.append("uniform_random_fill_1000/" + str(i))
+            maps.append("house_1000/" + str(i))
+            maps.append("block_map_1000/" + str(i))
+    
 
         maps = self.__convert_maps(maps)
         # maps = [Maps.grid_map_labyrinth, Maps.grid_map_labyrinth2]
@@ -499,6 +499,7 @@ class Analyzer:
             results: List[Dict[str, Any]] = []
 
             for _, grid in enumerate(maps):
+                # print('Done map#',_)
                 results.append(self.__run_simulation(grid, algorithm_type, testing_type, algo_params))
 
             a_star_res, res = self.__report_results(results, a_star_res, algorithm_type)
@@ -509,9 +510,15 @@ class Analyzer:
 ###Complex Analysis here! (Below)
         maps: List[Map] = [
             # Maps.pixel_map_one_obstacle.convert_to_dense_map(),
-            "block_map_1100/8"
-            "block_map_1100/9"
-            "block_map_1100/10"
+            "test_maps/8x8/0"
+            "test_maps/8x8/1"
+            "test_maps/8x8/2"
+            "test_maps/8x8/3"
+            "test_maps/8x8/4"
+            "test_maps/8x8/5"
+            # "block_map_1100/8"
+            # "block_map_1100/9"
+            # "block_map_1100/10"
             
             # "uniform_random_fill_10/0",
             # "block_map_10/6",
@@ -522,10 +529,12 @@ class Analyzer:
         ]
 
         map_names: List[str] = [
-            "block_map_1100/8"
-            "block_map_1100/9"
-            "block_map_1100/10"
-            
+            "test_maps/8x8/0",
+            "test_maps/8x8/1",
+            "test_maps/8x8/2",
+            "test_maps/8x8/3",
+            "test_maps/8x8/4",
+            "test_maps/8x8/5",
             # "uniform_random_fill_10/0",
             # "block_map_10/6",
             # "house_10/6",

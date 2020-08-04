@@ -120,8 +120,8 @@ class BasicLSTMModule(MLModel):
             ],
             "save_name": "tile_by_tile",
             "training_data": [
-                'training_house_30000'
-                #'training_uniform_random_fill_1000','training_house_1000','training_block_1000'
+                #'training_uniform_1000'
+                'training_uniform_random_fill_50000','training_house_50000','training_block_map_50000'
                 #"training_house_100", #Impt
             ],
             # training_uniform_random_fill_10000_block_map_10000_house_10000, "training_uniform_random_fill_10000_block_map_10000", "training_house_10000", "training_uniform_random_fill_10000", "training_block_map_10000",
@@ -156,6 +156,7 @@ class OnlineLSTM(Algorithm):
     # noinspection PyUnusedLocal
     def _find_path_internal(self) -> None:
         model: BasicLSTMModule = self._services.resources.model_dir.load(self._load_name)
+
         model.init_running_algorithm(self._get_grid())
         history_frequency: Dict[Point, int] = {}
         last_agent_pos: Point = self._get_grid().agent.position

@@ -5,8 +5,10 @@ from simulator.services.service import Service
 
 
 class Torch(Service):
+    SEED: int = 59 #For testing data purposes
+    #SEED: int = 56 #For validation data
     #SEED: int  = 52
-    SEED: int = 50
+    #SEED: int = 50 #For training data generation
     #SEED: int = 42
     GPU: bool = True
     DEVICE_INDEX: int = 0
