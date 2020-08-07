@@ -1,8 +1,8 @@
 import copy
 from threading import Thread
-# from pathos.multiprocessing  import Process,Queue
+from pathos.multiprocessing import ProcessPool
 #import torch.multiprocessing as multip
-import multiprocess as multip
+#import multiprocess as multip
 from typing import List, Tuple, Optional, Set
 
 from algorithms.algorithm import Algorithm
@@ -27,7 +27,7 @@ class CombinedOnlineLSTM(Algorithm):
     __total_path: Set[Point]
     t = datetime.datetime.now()
     def __init__(self, services: Services, testing: BasicTesting = None, kernel_names: List["str"] = None,
-                 max_it: float = float('inf'), threaded: bool = False): #Changed threaded to true
+                 max_it: float = float('inf'), threaded: bool = True): #Changed threaded to true
         super().__init__(services, testing)
         #print(datetime.datetime.now(), ' Line 28')
         # print('\n')
@@ -67,7 +67,8 @@ class CombinedOnlineLSTM(Algorithm):
             *active_kernel_displays,
             SolidColorMapDisplay(self._services, self.__total_path, (0, 150, 0), z_index=80),
         ]
-
+    def kernels_cal(self,data):
+        return data[1].find_path
     # TODO when max_it is inf take the solution where we are closer to the goal or implement special case
     def _find_path_internal(self) -> None:
         #print(datetime.datetime.now(), ' Line 68')
@@ -86,23 +87,28 @@ class CombinedOnlineLSTM(Algorithm):
         #TODO: HANGS here
         # print('Line 86')
         if self._threaded:
-            threaded_jobs: List[multip.Process] = list(
-                map(lambda kernel: multip.Process(target=kernel[1].find_path, daemon=False), kernels))
-            print(datetime.datetime.now(), ' Line 85')
-            print('Threaded Jobs: ', threaded_jobs)
-            multip.set_start_method('spawn')
+            # threaded_jobs: List[Process] = list(
+            #     map(lambda kernel: multip.Process(target=kernel[1].find_path, daemon=True), kernels))
             
+            # print(datetime.datetime.now(), ' Line 85')
+            # print('Threaded Jobs: ', threaded_jobs)
+            #multip.set_start_method('spawn')
+            # print('Kernals \n \n', kernels)
             i = 0
-            for j in threaded_jobs:
-                i+=1 
-                print('\n Started # ',i, j)
-                j.start()
-                # j.join()
-            i = 0
-            for j in threaded_jobs:
-                i+=1
-                print('\n Joined # ',i, j)
-                j.join()
+            # lambda kernel : kernel[1].find_path #function
+            #Data = kernels 
+            with ProcessPool(10) as pool:
+                result = pool.amap(self.kernels_cal,kernels)
+            # for j in threaded_jobs:
+            #     i+=1 
+            #     print('\n Started # ',i, j)
+            #     j.start()
+            #     # j.join()
+            # i = 0
+            # for j in threaded_jobs:
+            #     i+=1
+            #     print('\n Joined # ',i, j)
+            #     j.join()
         else: #It goes here #TODO: Figure out why it hangs
             #print('Kernels: ',kernels) #iterates through 10 kernels (max it = 10)
             for k in kernels:

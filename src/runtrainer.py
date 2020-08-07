@@ -132,8 +132,8 @@ show_sample_map = False #shows 5 samples
 gen_start = False
 train_start = False 
 sim_start = False
-config.generator_house_expo = False
 analyzer_start = True
+config.generator_house_expo = False
 config.generator_size = 64 # Change the size of the maps generated
 
 
@@ -141,6 +141,8 @@ config.generator_size = 64 # Change the size of the maps generated
 config.clear_cache = True
 
 #Generator
+
+
 mp = maps[chosen_map] 
  #Chooses map for generation
 

@@ -144,6 +144,7 @@ class Analyzer:
     def __convert_maps(self, maps: List[Map]) -> List[Map]:
         def f(m: Union[str, Map]) -> Map:
             if isinstance(m, str):
+                # print('m', m)
                 return self.__services.resources.maps_dir.load(m)
             return m
 
@@ -420,9 +421,10 @@ class Analyzer:
         maps: List[Map] = []
 
         for i in range(1000): 
-            maps.append("uniform_random_fill_1000/" + str(i))
-            maps.append("house_1000/" + str(i))
-            maps.append("block_map_1000/" + str(i))
+            # maps.append('8_mixed/' + str(i))
+            maps.append("16_uniform_random_fill_1000/" + str(i))
+            maps.append("16_house_1000/" + str(i))
+            maps.append("16_block_map_1000/" + str(i))
     
 
         maps = self.__convert_maps(maps)
@@ -434,14 +436,14 @@ class Analyzer:
             # (OnlineLSTM, BasicTesting, ([], {"load_name": "tile_by_tile_training_block_map_10000_model"})),
             # (OnlineLSTM, BasicTesting, ([], {"load_name": "tile_by_tile_training_house_10000_model"})),
             # (OnlineLSTM, BasicTesting, ([], {"load_name": "tile_by_tile_training_uniform_random_fill_10000_block_map_10000_model"})),
-            # (OnlineLSTM, BasicTesting, ([], {"load_name": "tile_by_tile_training_uniform_random_fill_10000_block_map_10000_house_10000_model"})),
+            (OnlineLSTM, BasicTesting, ([], {"load_name": "tile_by_tile_training_uniform_random_fill_10000_block_map_10000_house_10000_model"})),
             # (OnlineLSTM, BasicTesting, ([], {"load_name": "caelstm_section_lstm_training_uniform_random_fill_10000_model"})),
             # (OnlineLSTM, BasicTesting, ([], {"load_name": "caelstm_section_lstm_training_block_map_10000_model"})),
             # (OnlineLSTM, BasicTesting, ([], {"load_name": "caelstm_section_lstm_training_house_10000_model"})),
             # (OnlineLSTM, BasicTesting, ([], {"load_name": "caelstm_section_lstm_training_uniform_random_fill_10000_block_map_10000_model"})),
-            # (OnlineLSTM, BasicTesting, ([], {"load_name": "caelstm_section_lstm_training_uniform_random_fill_10000_block_map_10000_house_10000_model"})),
-            # (CombinedOnlineLSTM, CombinedOnlineLSTMTesting, ([], {})),
-            (WayPointNavigation, WayPointNavigationTesting, ([], {"global_kernel_max_it": 20, "global_kernel": (OnlineLSTM, ([], {"load_name": "caelstm_section_lstm_training_block_map_10000_model"}))})),
+            (OnlineLSTM, BasicTesting, ([], {"load_name": "caelstm_section_lstm_training_uniform_random_fill_10000_block_map_10000_house_10000_model"})),
+            (CombinedOnlineLSTM, CombinedOnlineLSTMTesting, ([], {})),
+            # (WayPointNavigation, WayPointNavigationTesting, ([], {"global_kernel_max_it": 20, "global_kernel": (OnlineLSTM, ([], {"load_name": "caelstm_section_lstm_training_block_map_10000_model"}))})),
             (WayPointNavigation, WayPointNavigationTesting, ([], {"global_kernel_max_it": 20, "global_kernel": (OnlineLSTM, ([], {"load_name": "tile_by_tile_training_uniform_random_fill_10000_block_map_10000_house_10000_model"}))})),
             (WayPointNavigation, WayPointNavigationTesting, ([], {"global_kernel_max_it": 20, "global_kernel": (CombinedOnlineLSTM, ([], {}))})),
         ]
@@ -464,14 +466,14 @@ class Analyzer:
             # "Online LSTM on block_map_10000",
             # "Online LSTM on house_10000",
             # "Online LSTM on uniform_random_fill_10000_block_map_10000",
-            # "Online LSTM on uniform_random_fill_10000_block_map_10000_house_10000",
+            "Online LSTM on uniform_random_fill_10000_block_map_10000_house_10000 (View module)",
             # "CAE Online LSTM on uniform_random_fill_10000",
             # "CAE Online LSTM on block_map_10000 (paper solution)",
             # "CAE Online LSTM on house_10000",
             # "CAE Online LSTM on uniform_random_fill_10000_block_map_10000",
-            # "CAE Online LSTM on uniform_random_fill_10000_block_map_10000_house_10000",
-            # "Combined Online LSTM (proposed solution)",
-            "WayPointNavigation with local kernel: A* and global kernel: CAE Online LSTM on block_map_10000 (paper solution)",
+            "CAE Online LSTM on uniform_random_fill_10000_block_map_10000_house_10000 (Map module)",
+            "Combined Online LSTM (proposed solution) (Bagging)",
+            # "WayPointNavigation with local kernel: A* and global kernel: CAE Online LSTM on block_map_10000 (paper solution)",
             "WayPointNavigation with local kernel: A* and global kernel: Online LSTM on uniform_random_fill_10000_block_map_10000_house_10000 (paper solution)",
             "WayPointNavigation with local kernel: A* and global kernel: Combined Online LSTM (proposed solution)",
         ]
@@ -510,12 +512,12 @@ class Analyzer:
 ###Complex Analysis here! (Below)
         maps: List[Map] = [
             # Maps.pixel_map_one_obstacle.convert_to_dense_map(),
-            "test_maps/8x8/0"
-            "test_maps/8x8/1"
-            "test_maps/8x8/2"
-            "test_maps/8x8/3"
-            "test_maps/8x8/4"
-            "test_maps/8x8/5"
+            "test_maps/8x8/0",
+            "test_maps/8x8/1",
+            "test_maps/8x8/2",
+            "test_maps/8x8/3",
+            "test_maps/8x8/4",
+            "test_maps/8x8/5",
             # "block_map_1100/8"
             # "block_map_1100/9"
             # "block_map_1100/10"
