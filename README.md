@@ -1,3 +1,5 @@
+Bug fixes in upcoming update.
+
 # PathBench: A Benchmarking Platform for Classic and Learned Path Planning Algorithms
 [![coverage report](https://gitlab.doc.ic.ac.uk/ait15/individual-project/badges/master/coverage.svg)](https://gitlab.doc.ic.ac.uk/ait15/individual-project/commits/master)
 
