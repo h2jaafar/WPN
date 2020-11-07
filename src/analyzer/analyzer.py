@@ -17,7 +17,6 @@ from algorithms.lstm.combined_online_LSTM import CombinedOnlineLSTM
 from algorithms.classic.testing.combined_online_lstm_testing import CombinedOnlineLSTMTesting
 from algorithms.lstm.a_star_waypoint import WayPointNavigation
 from algorithms.classic.testing.way_point_navigation_testing import WayPointNavigationTesting
-
 from maps import Maps
 from simulator.services.debug import DebugLevel, Debug
 from simulator.services.services import Services
@@ -144,7 +143,6 @@ class Analyzer:
     def __convert_maps(self, maps: List[Map]) -> List[Map]:
         def f(m: Union[str, Map]) -> Map:
             if isinstance(m, str):
-                # print('m', m)
                 return self.__services.resources.maps_dir.load(m)
             return m
 
@@ -183,12 +181,14 @@ class Analyzer:
         res_proc["average_distance_improvement"] = average_distance_improvement
         res_proc["average_time_improvement"] = average_time_improvement
         res_proc["average_distance_from_goal_improvement"] = average_distance_from_goal_improvement
+        
 
         self.__services.debug.write("Rate of success: {}%, (A*: {}%), (Improvement: {}%)".format(res_proc["goal_found_perc"], a_star_res_proc["goal_found_perc"], goal_found_perc_improvement), streams=[self.__analysis_stream])
         self.__services.debug.write("Average total steps: {}, (A*: {}), (Improvement: {}%)".format(res_proc["average_steps"], a_star_res_proc["average_steps"], average_steps_improvement), streams=[self.__analysis_stream])
         self.__services.debug.write("Average total distance: {}, (A*: {}), (Improvement: {}%)".format(res_proc["average_distance"], a_star_res_proc["average_distance"], average_distance_improvement), streams=[self.__analysis_stream])
         self.__services.debug.write("Average time: {} seconds, (A*: {} seconds), (Improvement: {}%)".format(res_proc["average_time"], a_star_res_proc["average_time"], average_time_improvement), streams=[self.__analysis_stream])
         self.__services.debug.write("Average distance from goal: {}, (A*: {}), (Improvement: {}%) (Average original distance from goal: {})".format(res_proc["average_distance_from_goal"], a_star_res_proc["average_distance_from_goal"], average_distance_from_goal_improvement, res_proc["average_original_distance_from_goal"]), streams=[self.__analysis_stream])
+        self.__services.debug.write("Original distance (direct): {}".format(res_proc["average_original_distance_from_goal"]))
 
         if "average_fringe" in res_proc:
             self.__services.debug.write("Average search space (no fringe): {}%".format(res_proc["average_search_space"]), streams=[self.__analysis_stream])
@@ -420,45 +420,46 @@ class Analyzer:
         self.__analysis_stream = StringIO()
         maps: List[Map] = []
 
-        for i in range(1000): 
-            # maps.append('8_mixed/' + str(i))
-            maps.append("16_uniform_random_fill_1000/" + str(i))
-            maps.append("16_house_1000/" + str(i))
-            maps.append("16_block_map_1000/" + str(i))
-    
+        for i in range(30):
+            maps.append("8_test_maps/house_1500/" + str(i))
+            # maps.append("_house_expo/" + str(i))
+            # maps.append("16_test_maps/uniform_random_fill_1500/" + str(i))
+            # maps.append("16_test_maps/house_1500/" + str(i))
 
         maps = self.__convert_maps(maps)
         # maps = [Maps.grid_map_labyrinth, Maps.grid_map_labyrinth2]
-
+        
         algorithms: List[Tuple[Type[Algorithm], Type[BasicTesting], Tuple[list, dict]]] = [
             (AStar, AStarTesting, ([], {})),
             # (OnlineLSTM, BasicTesting, ([], {"load_name": "tile_by_tile_training_uniform_random_fill_10000_model"})),
             # (OnlineLSTM, BasicTesting, ([], {"load_name": "tile_by_tile_training_block_map_10000_model"})),
             # (OnlineLSTM, BasicTesting, ([], {"load_name": "tile_by_tile_training_house_10000_model"})),
             # (OnlineLSTM, BasicTesting, ([], {"load_name": "tile_by_tile_training_uniform_random_fill_10000_block_map_10000_model"})),
-            (OnlineLSTM, BasicTesting, ([], {"load_name": "tile_by_tile_training_uniform_random_fill_10000_block_map_10000_house_10000_model"})),
+                #(OnlineLSTM, BasicTesting, ([], {"load_name": "tile_by_tile_training_uniform_random_fill_10000_block_map_10000_house_10000_model"})),
             # (OnlineLSTM, BasicTesting, ([], {"load_name": "caelstm_section_lstm_training_uniform_random_fill_10000_model"})),
             # (OnlineLSTM, BasicTesting, ([], {"load_name": "caelstm_section_lstm_training_block_map_10000_model"})),
             # (OnlineLSTM, BasicTesting, ([], {"load_name": "caelstm_section_lstm_training_house_10000_model"})),
             # (OnlineLSTM, BasicTesting, ([], {"load_name": "caelstm_section_lstm_training_uniform_random_fill_10000_block_map_10000_model"})),
-            (OnlineLSTM, BasicTesting, ([], {"load_name": "caelstm_section_lstm_training_uniform_random_fill_10000_block_map_10000_house_10000_model"})),
-            (CombinedOnlineLSTM, CombinedOnlineLSTMTesting, ([], {})),
-            # (WayPointNavigation, WayPointNavigationTesting, ([], {"global_kernel_max_it": 20, "global_kernel": (OnlineLSTM, ([], {"load_name": "caelstm_section_lstm_training_block_map_10000_model"}))})),
-            (WayPointNavigation, WayPointNavigationTesting, ([], {"global_kernel_max_it": 20, "global_kernel": (OnlineLSTM, ([], {"load_name": "tile_by_tile_training_uniform_random_fill_10000_block_map_10000_house_10000_model"}))})),
-            (WayPointNavigation, WayPointNavigationTesting, ([], {"global_kernel_max_it": 20, "global_kernel": (CombinedOnlineLSTM, ([], {}))})),
+            #(OnlineLSTM, BasicTesting, ([], {"load_name": "caelstm_section_lstm_training_uniform_random_fill_10000_block_map_10000_house_10000_model"})),
+            #(CombinedOnlineLSTM, CombinedOnlineLSTMTesting, ([], {})),
+            #(WayPointNavigation, WayPointNavigationTesting, ([], {"global_kernel_max_it": 20, "global_kernel": (OnlineLSTM, ([], {"load_name": "caelstm_section_lstm_training_block_map_10000_model"}))})),
+            #(WayPointNavigation, WayPointNavigationTesting, ([], {"global_kernel_max_it": 20, "global_kernel": (OnlineLSTM, ([], {"load_name": "tile_by_tile_training_uniform_random_fill_10000_block_map_10000_house_10000_model"}))})),
+            #(WayPointNavigation, WayPointNavigationTesting, ([], {"global_kernel_max_it": 20, "global_kernel": (CombinedOnlineLSTM, ([], {}))})),
         ]
-
-        # algorithms: List[Tuple[Type[Algorithm], Type[BasicTesting], Tuple[list, dict]]] = [
-        #     (AStar, AStarTesting, ([], {})),
-        #     #(RT, BasicTesting, ([], {})),
-        #     (RRT, BasicTesting, ([], {})),
-        #     (RRT_Star, BasicTesting, ([], {})),
-        #     (RRT_Connect, BasicTesting, ([], {})),
-        #     (Wavefront, WavefrontTesting, ([], {})),
-        #     (Dijkstra, DijkstraTesting, ([], {})),
-        #     #(Bug1, BasicTesting, ([], {})),
-        #     #(Bug2, BasicTesting, ([], {}))
-        # ]
+        
+        '''
+        algorithms: List[Tuple[Type[Algorithm], Type[BasicTesting], Tuple[list, dict]]] = [
+            (AStar, AStarTesting, ([], {})),
+            #(RT, BasicTesting, ([], {})),
+            # (RRT, BasicTesting, ([], {})),
+            (RRT_Star, BasicTesting, ([], {})),
+            # (RRT_Connect, BasicTesting, ([], {})),
+            # (Wavefront, WavefrontTesting, ([], {})),
+            # (Dijkstra, DijkstraTesting, ([], {})),
+            #(Bug1, BasicTesting, ([], {})),
+            #(Bug2, BasicTesting, ([], {}))
+        ]
+        '''
 
         algorithm_names: List[str] = [
             "A*",
@@ -466,29 +467,31 @@ class Analyzer:
             # "Online LSTM on block_map_10000",
             # "Online LSTM on house_10000",
             # "Online LSTM on uniform_random_fill_10000_block_map_10000",
-            "Online LSTM on uniform_random_fill_10000_block_map_10000_house_10000 (View module)",
+            #"View Module - Online LSTM on uniform_random_fill_10000_block_map_10000_house_10000",
             # "CAE Online LSTM on uniform_random_fill_10000",
             # "CAE Online LSTM on block_map_10000 (paper solution)",
             # "CAE Online LSTM on house_10000",
             # "CAE Online LSTM on uniform_random_fill_10000_block_map_10000",
-            "CAE Online LSTM on uniform_random_fill_10000_block_map_10000_house_10000 (Map module)",
-            "Combined Online LSTM (proposed solution) (Bagging)",
-            # "WayPointNavigation with local kernel: A* and global kernel: CAE Online LSTM on block_map_10000 (paper solution)",
-            "WayPointNavigation with local kernel: A* and global kernel: Online LSTM on uniform_random_fill_10000_block_map_10000_house_10000 (paper solution)",
-            "WayPointNavigation with local kernel: A* and global kernel: Combined Online LSTM (proposed solution)",
+            #"Map Module - CAE Online LSTM on uniform_random_fill_10000_block_map_10000_house_10000",
+            #"Bagging - Combined Online LSTM (proposed solution)",
+            #"WayPointNavigation with local kernel: A* and global kernel: CAE Online LSTM on block_map_10000 (paper solution)",
+            #"WayPointNavigation with local kernel: A* and global kernel: Online LSTM on uniform_random_fill_10000_block_map_10000_house_10000 (paper solution)",
+            #"WayPointNavigation with local kernel: A* and global kernel: Combined Online LSTM (proposed solution)",
         ]
-
-        # algorithm_names: List[str] = [
-        #     "A*",
-        #     #"RT",
-        #     "RRT",
-        #     "RRT*",
-        #     "RRT-Connect",
-        #     "Wave-front",
-        #     "Dijkstra",
-        #     #"Bug1",
-        #     #"Bug2"
-        # ]
+        
+        '''
+        algorithm_names: List[str] = [
+            "A*",
+            #"RT",
+            # "RRT",
+            "RRT*",
+            # "RRT-Connect",
+            # "Wave-front",
+            # "Dijkstra",
+            #"Bug1",
+            #"Bug2"
+        ]
+        '''
 
         self.__services.debug.write("", timestamp=False, streams=[self.__analysis_stream])
         self.__services.debug.write("Starting basic analysis: number of maps = {}, number of algorithms = {}".format(len(maps), len(algorithms)), end="\n\n", streams=[self.__analysis_stream])
@@ -501,48 +504,29 @@ class Analyzer:
             results: List[Dict[str, Any]] = []
 
             for _, grid in enumerate(maps):
-                # print('Done map#',_)
                 results.append(self.__run_simulation(grid, algorithm_type, testing_type, algo_params))
-
+                # print("ResultS dict line 500", results)
             a_star_res, res = self.__report_results(results, a_star_res, algorithm_type)
             algorithm_results[idx] = res
         self.__tabulate_results(algorithms, algorithm_results, with_indexing=True)
 
-
-###Complex Analysis here! (Below)
         maps: List[Map] = [
             # Maps.pixel_map_one_obstacle.convert_to_dense_map(),
-            "test_maps/8x8/0",
-            "test_maps/8x8/1",
-            "test_maps/8x8/2",
-            "test_maps/8x8/3",
-            "test_maps/8x8/4",
-            "test_maps/8x8/5",
-            # "block_map_1100/8"
-            # "block_map_1100/9"
-            # "block_map_1100/10"
-            
-            # "uniform_random_fill_10/0",
-            # "block_map_10/6",
-            # "house_10/6",
-            # Maps.grid_map_labyrinth,
-            # Maps.grid_map_labyrinth2,
-            # Maps.grid_map_one_obstacle.convert_to_dense_map(),
+            "12uniform_random_fill_10/0",
+            "12block_map_10/6",
+            "12house_10/6",
+            Maps.grid_map_labyrinth,
+            Maps.grid_map_labyrinth2,
+            Maps.grid_map_one_obstacle.convert_to_dense_map(),
         ]
 
         map_names: List[str] = [
-            "test_maps/8x8/0",
-            "test_maps/8x8/1",
-            "test_maps/8x8/2",
-            "test_maps/8x8/3",
-            "test_maps/8x8/4",
-            "test_maps/8x8/5",
-            # "uniform_random_fill_10/0",
-            # "block_map_10/6",
-            # "house_10/6",
-            # "Maps.grid_map_labyrinth",
-            # "Maps.grid_map_labyrinth2",
-            # "Maps.grid_map_one_obstacle.convert_to_dense_map()",
+            "uniform_random_fill_10/0",
+            "block_map_10/6",
+            "house_10/6",
+            "Maps.grid_map_labyrinth",
+            "Maps.grid_map_labyrinth2",
+            "Maps.grid_map_one_obstacle.convert_to_dense_map()",
         ]
 
         maps = self.__convert_maps(maps)

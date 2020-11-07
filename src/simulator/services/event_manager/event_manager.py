@@ -80,6 +80,12 @@ class EventManager:
             tick_listener.tick()
         # send all events
         while len(self.__event_queue) > 0:
-            event = self.__event_queue.pop(0)
-            for listener in list(self.__listeners.keys()):
-                listener.notify(event)
+            try:
+                event = self.__event_queue.pop(0)
+                for listener in list(self.__listeners.keys()):
+                    # print('listher', listener)
+
+                    listener.notify(event)
+            except:
+                print('ERROR!!\n\n\n')
+                pass

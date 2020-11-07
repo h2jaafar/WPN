@@ -34,6 +34,9 @@ from algorithms.configuration.configuration import Configuration
 from algorithms.lstm.LSTM_tile_by_tile import OnlineLSTM
 from algorithms.lstm.a_star_waypoint import WayPointNavigation
 from algorithms.lstm.combined_online_LSTM import CombinedOnlineLSTM
+#Pathreader debugging tool
+from algorithms.pathreader import PathReader
+
 
 
 class GUI:
@@ -48,13 +51,20 @@ class GUI:
         "SLAM Map 1 (compressed)": ("map11", True),
         "SLAM Map 2": ("map14", False),
         "SLAM Map 3": ("map12", False),
-    }
+
+
+
+        }
+
+
     __algorithms = {
         "A*": (AStar, AStarTesting, ([], {})),
-        "Global Way-point LSTM": (WayPointNavigation, WayPointNavigationTesting, ([], {"global_kernel": (CombinedOnlineLSTM, ([], {})), "global_kernel_max_it": 100})),
+        "WPN1":(WayPointNavigation, WayPointNavigationTesting, ([], {"global_kernel_max_it": 20, "global_kernel": (CombinedOnlineLSTM, ([], {}))})),
+        "WPN2 (LSTM) ":(WayPointNavigation, WayPointNavigationTesting, ([], {"global_kernel_max_it": 20, "global_kernel": (OnlineLSTM, ([], {"load_name": "tile_by_tile_training_uniform_random_fill_10000_block_map_10000_house_10000_model"}))})),
+        "WPN3 (CAE)": (WayPointNavigation, WayPointNavigationTesting, ([], {"global_kernel_max_it": 20, "global_kernel": (OnlineLSTM, ([], {"load_name": "caelstm_section_lstm_training_block_map_10000_model"}))})),
         "LSTM Bagging": (CombinedOnlineLSTM, CombinedOnlineLSTMTesting, ([], {})),
-        "CAE Online LSTM": (OnlineLSTM, BasicTesting, ([], {"load_name": "caelstm_section_lstm_training_block_map_10000_model"})),
-        "Online LSTM": (OnlineLSTM, BasicTesting, ([], {"load_name": "tile_by_tile_training_uniform_random_fill_10000_block_map_10000_house_10000_model"})),
+        "Map Module (CAE) ": (OnlineLSTM, BasicTesting, ([], {"load_name": "caelstm_section_lstm_training_uniform_random_fill_10000_block_map_10000_model"})),
+        "View Module (Online LSTM)": (OnlineLSTM, BasicTesting, ([], {"load_name": "tile_by_tile_training_uniform_random_fill_10000_block_map_10000_house_10000_model"})),
         "SPRM": (SPRM, BasicTesting, ([], {})),
         "RT": (RT, BasicTesting, ([], {})),
         "RRT": (RRT, BasicTesting, ([], {})),
@@ -64,6 +74,7 @@ class GUI:
         "Dijkstra": (Dijkstra, DijkstraTesting, ([], {})),
         "Bug1": (Bug1, BasicTesting, ([], {})),
         "Bug2": (Bug2, BasicTesting, ([], {})),
+        "Path Reader": (PathReader, BasicTesting, ([], {})),
     }
 
     __animations = {

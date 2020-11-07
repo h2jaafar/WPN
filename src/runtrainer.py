@@ -57,13 +57,16 @@ maps = {
     "House": ("house_10/6", True),
     "Long Wall": (Maps.grid_map_labyrinth2, True),
     "Labyrinth": (Maps.grid_map_labyrinth, True),
+    
     "Small Obstacle": (Maps.grid_map_one_obstacle.convert_to_dense_map(), True),
     "SLAM Map 1": ("map10", False),
     "SLAM Map 1 (compressed)": ("map11", True),
     "SLAM Map 2": ("map14", False),
     "SLAM Map 3": ("map12", False),
     "House Expo Sample": ("_house_expo/10",False),
-    "Block 8x8": ('block_map_100/20',True)
+    "Block 8x8": ('block_map_100/20',True),
+    "Block testing": ('block_map_100/0',True)
+
     }
 
 #LSTM Bagging is referred to as CombinedOnlineLSTM, it is used as a glboal kernel for LWP
@@ -122,19 +125,20 @@ labelling = {
 
 
 #Input hyperparametres here 
-chosen_map = 'Block'
-algo = algorithms['A*'] #Choose which planner 
+chosen_map = 'Uniform Random Fill'
+algo = algorithms['RRT*'] #Choose which planner 
 ani = animations['Fast'] #Choose animation speed
 debug = debug['High'] #Choose debug level 
 training_algo = BasicLSTMModule #Chooses the algorithm to train, either CAE, BasicLSTMModule,LSTMCAEModel
-nbr_ex = 1000 #Number of maps generated
+nbr_ex = 15000 #Number of maps generated
 show_sample_map = False #shows 5 samples
-gen_start = False
+gen_start = True
 train_start = False 
 sim_start = False
-analyzer_start = True
-config.generator_house_expo = False
+analyzer_start = False
+config.generator_house_expo = True
 config.generator_size = 64 # Change the size of the maps generated
+
 
 
 #Cache

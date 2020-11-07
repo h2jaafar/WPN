@@ -1,4 +1,8 @@
-
+# to be moved to top
+#source /opt/ros/melodic/setup.bash run this
+#then run:
+#roscore
+#then run this file
 import os
 
 import rospy
@@ -7,6 +11,9 @@ import math_util as m
 
 from nav_msgs.msg import OccupancyGrid, Odometry
 from geometry_msgs.msg import PoseWithCovarianceStamped, Twist, PoseStamped
+import actionlib
+from move_base_msgs.msg import MoveBaseAction, MoveBaseGoal
+
 
 import threading
 from threading import Lock, Condition
@@ -45,15 +52,15 @@ class Ros:
         # self._wp_cond = Condition()
         self._current_wp = None
         self._cur_wp = None
-        self.goal = Point(70,70)
+        self.goal = Point(100,95)
 
-        rospy.init_node("lstm1", log_level=rospy.INFO)
+        rospy.init_node("astar_experiment", log_level=rospy.INFO)
         rospy.Subscriber("/map", OccupancyGrid, self._set_slam)
         rospy.Subscriber('/odom',Odometry,self.__odometryCb)
         # rospy.Subscriber("/odom",Odometry, self._set_agent_pos)
         # rospy.Subscriber("/robot_pose", PoseStamped, self._set_agent_pos) #this sets self.agent 
         self.pubs = {
-            "vel": rospy.Publisher("/cmd_vel", Twist, queue_size=10), #velocity 
+            "vel": rospy.Publisher("/cmd_vel", Twist, queue_size=10), 
         }
         self.agent = None
         self.grid = None
@@ -69,6 +76,7 @@ class Ros:
             self.MAP_SIZE = Size(self.SIZE, self.SIZE) #128x128
             self.REZ = map_info.resolution
             self.ORIGIN = [map_info.origin.position.x, map_info.origin.position.y]
+            print('line71')
 
         self.SLAM_MAP = Size(map_info.width, map_info.height) #4000x4000
 
@@ -107,6 +115,16 @@ class Ros:
 
         grid2 = [[100 for _ in range(self.MAP_SIZE.width)] for _ in range(self.MAP_SIZE.height)]
 
+        #print("start ", start)
+        #print(map_info.width, map_info.height)
+        #print(self.ORIGIN)
+        #print(map_info.origin.position)
+
+        #print("expscascsa")
+        #print(self._world_to_grid([0, 0]))
+        #print(self._grid_to_world(Point(0, 0)))
+        #print(self._world_to_grid(Point(0, 0), Size(map_info.width, map_info.height), [map_info.origin.position.x, map_info.origin.position.y]))
+        # crop raw_grid
         for i in range(start[1], start[1] + self.MAP_SIZE.height):
             for j in range(start[0], start[0] + self.MAP_SIZE.width):
                 if i >= 0 and j >= 0 and j < map_info.width and i < map_info.height:
@@ -144,7 +162,9 @@ class Ros:
 
     def __odometryCb(self,msg):
         # print('******************************************', msg.pose.pose)
+        self._agent_lock.acquire()
         self.agent = msg.pose
+        self._agent_lock.release()
 
     def _set_agent_pos(self, odom_msg): #The functions here don't get evaluated. 
         # print('agent', self.agent)
@@ -262,11 +282,43 @@ class Ros:
     def _update_requested(self):
         pass  # request slam
 
+    def _internal_simulator(self,s):
+        print('Internal Simulator intilized')
+        goal_grid = [self.goal.x,self.goal.y] # Goal as a grid value
+        goal_grid = Point(goal_grid[0],goal_grid[1])
+        goal = self._grid_to_world(goal_grid)
+        print('goal in the ros map coordinates: ', goal)
+        self._set_goal(goal)
+        #This is the goal in the gazebo space, now to send to gazebo
+
+        i = [0,0]
+        goal_reached = False
+        while True:
+            agent = self._get_agent_pos()
+            agent_pos = [agent.pose.position.x, agent.pose.position.y]
+            agent_pos_grid = self._world_to_grid(agent_pos)
+
+            if agent_pos_grid.x != i[0] or agent_pos_grid.y != i[1]: #i.e if there is a change in position from before
+                print("{},".format([agent_pos_grid.x, agent_pos_grid.y]))
+                i[0] = agent_pos_grid.x 
+                i[1] = agent_pos_grid.y 
+            
+            elif (agent_pos_grid.x == goal_grid.x or agent_pos_grid.x == (goal_grid.x + 1) or agent_pos_grid.x == (goal_grid.x -1)) and \
+                (agent_pos_grid.y == goal_grid.y or agent_pos_grid.y == (goal_grid.y -1) or agent_pos_grid.y == (goal_grid.y + 1)):
+                print('Goal reached')
+
+                s.algorithm.map.request_update()
+
+                sim = Simulator(s)
+                sim.start()
+                return
+                
+
     def _setup_sim(self, agent_pos) -> Simulator:
         agent_pos = self._world_to_grid(agent_pos)      #converts the slam map to a gridworld, i.e 40000 ->128  
 
         print("Agent Position: {}".format(agent_pos))
-
+        
         config = Configuration()
 
         config.simulator_graphics = True
@@ -276,16 +328,14 @@ class Ros:
         # config.simulator_algorithm_parameters = ([], 
         #          {"global_kernel": (CombinedOnlineLSTM, ([], {})),
         #           "global_kernel_max_it": 30})
-        config.simulator_algorithm_parameters = ([], {"global_kernel_max_it": 20, "global_kernel": (OnlineLSTM, ([], {"load_name": "caelstm_section_lstm_training_block_map_10000_model"}))})
-        
-        
-        # config.simulator_algorithm_parameters = ([], 
-        #         {"global_kernel_max_it": 20, 
-        #         "global_kernel": (OnlineLSTM, ([], {"load_name": "tile_by_tile_training_uniform_random_fill_10000_block_map_10000_house_10000_model"}))})
+
+        config.simulator_algorithm_parameters = ([], 
+                {"global_kernel_max_it": 20, 
+                "global_kernel": (OnlineLSTM, ([], {"load_name": "tile_by_tile_training_uniform_random_fill_10000_block_map_10000_house_10000_model"}))})
 
         
         config.simulator_testing_type = WayPointNavigationTesting # AStar # WayPointNavigationTesting  # BasicTesting
-        # print('gets to 289 before attempting to make ros map')
+        print('gets to 289 before attempting to make ros map')
         config.simulator_initial_map = RosMap(self.MAP_SIZE, 
                                               Agent(agent_pos, radius=self.INFLATE),
                                               Goal(self.goal), 
@@ -293,11 +343,17 @@ class Ros:
                                               self._send_way_point,
                                               self._update_requested)
 
+        
         s = Services(config)
         #print(s.algorithm.map)
         s.algorithm.map.request_update()
+        self._internal_simulator(s)
+        print('Done the internal simulator, take screenshot using pb')
         sim = Simulator(s)
         return sim
+    
+    
+
     def _world_to_grid(self, pos, map_size = None, origin = None): 
         '''
         converts from meters coordinates to grid coordinates (4000x4000)
@@ -312,14 +368,16 @@ class Ros:
         # print("ascsascsasacsacascsa", pos, map_size, origin)
 
         grid_pos = [pos[0] - origin[0], pos[1] - origin[1]]
-        # print(grid_pos)
+        # print("Current pos:", grid_pos)
+        
         grid_pos = [int(round(grid_pos[0] / self.REZ)), 
                     int(round(grid_pos[1] / self.REZ))]
         #print(grid_pos)
         grid_pos[1] = self.SLAM_MAP.height - grid_pos[1] - 1
         #print(grid_pos)
         # print("FIN")
-        return Point(*grid_pos)
+        
+        return Point(*grid_pos) # simply keep a value if there is an obstacle or not (and if it's unknown). So you simply have to tell ROS the coordin
     
     def _grid_to_world(self, pos, map_size: Size = None, origin = None):
         if not map_size:
@@ -334,6 +392,42 @@ class Ros:
         world_pos = [world_pos[0] + origin[0], 
                      world_pos[1] + origin[1]]
         return world_pos
+    def _set_goal(self,goal_given):
+        '''
+        this function sets the goal using a simple command to topic: /move_base/goal
+        ensure the goal sent is in meters
+        '''
+        print("Initializing the set goal function")
+        print('goal paseed to set goal: ', goal_given)
+        client = actionlib.SimpleActionClient('move_base',MoveBaseAction)
+ 
+    # Waits until the action server has started up and started listening for goals.
+        client.wait_for_server()
+
+    # Creates a new goal with the MoveBaseGoal constructor
+        goal = MoveBaseGoal()
+        goal.target_pose.header.frame_id = "map"
+        goal.target_pose.header.stamp = rospy.Time.now()
+    # Move 0.5 meters forward along the x axis of the "map" coordinate frame 
+        goal.target_pose.pose.position.x = goal_given[0]
+    # No rotation of the mobile base frame w.r.t. map frame
+        goal.target_pose.pose.orientation.w = 1.0
+        goal.target_pose.pose.position.y = goal_given[1]
+
+    # Sends the goal to the action server.
+        client.send_goal(goal)
+        return 
+    # Waits for the server to finish performing the action.
+    #     wait = client.wait_for_result()
+    # # If the result doesn't arrive, assume the Server is not available
+    #     if not wait:
+    #         rospy.logerr("Action server not available!")
+    #         rospy.signal_shutdown("Action server not available!")
+    #     else:
+    #     # Result of executing the action
+    #         return client.get_result()   
+
+
 
     def _find_goal(self):
         rospy.loginfo("Starting Simulator")
@@ -351,7 +445,8 @@ class Ros:
         # signal waypoint
         # self._has_reached_way_point()
 
-        sim.start()
+        print('Finished')
+        # sim.start()
 
     def start(self):
         rospy.loginfo("Starting LSTM")

@@ -1,7 +1,14 @@
+<<<<<<< HEAD
 Bug fixes in upcoming update.
 
 # PathBench: A Benchmarking Platform for Classic and Learned Path Planning Algorithms
+=======
+# Waypoint Planning Networks (WPN)
+>>>>>>> Update to ROS extension, read me updates.
 [![coverage report](https://gitlab.doc.ic.ac.uk/ait15/individual-project/badges/master/coverage.svg)](https://gitlab.doc.ic.ac.uk/ait15/individual-project/commits/master)
+
+## Introduction
+Waypoint Planning Networks (WPN) is a hybrid planning algorithm, submitted to the ICRA2021 conference. For more specifics about the algorithm, please see the paper. This repository is a combination of WPN algorithm, its varients, and PathBench, a benchmarking framework with support for machine learning algorithms. 
 
 ## PathBench
 
@@ -58,25 +65,22 @@ python3 main_gui.py
 This section is responsible for generating and labelling the training data used to train
 the Machine Learning models. To run the trainer, use the runtrainer.py script in src. Modify
 the required hyperparameters (sim_start,gen_start,train_start), the algorithm you want to train,
-and the training_data you want to generate. WIP. Note, you must change the atlas name under the 
-LSTM module you are intending to train. Further explanation will be added. Note, you must also 
-create a folder named _cache_ in src>resources in order for the trainer to function correctly
-(This has been fixed by using makedirs instead of mkdir).
+and the training_data you want to generate. The training pipeline is dependant on training data generated from the generator.
+Note, you must also 
+create a folder named _cache_ in src>resources in order for the trainer to function correctly.
 
-When editing in any desired IDE, ensure you are using the PathBench>SRC folder as the working 
-directory, else it will create a directory in an unwanted spot. 
 
 **Generator**
 This section is a class wrapper over the third party Machine Learning libraries. It
 provides a generic training pipeline based on the holdout method and standardised access to the
-training data.
+training data. 
 
 **Analyzer**
 Analyzer. The final section manages the statistical measures used in the practical assessment of
 the algorithms. Custom metrics can be defined as well as graphical displays for visual interpretations.
 
 **ROS Real-time Extension**. The extension provides real-time support for visualisation, coordination
-and interaction with a physical robot.
+and interaction with a physical robot. The ros extension subscribes to odom readings from the robot, and will publish velocity commands. More complete simulations will be provided at a later date. 
 
 **Example Real Trajectory**
 <br />

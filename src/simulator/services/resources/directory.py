@@ -27,9 +27,9 @@ class Directory(Service):
         if create:
             if overwrite and os.path.exists(self._full_path()):
                 shutil.rmtree(self._full_path())
-
+                
             if not os.path.exists(self._full_path()):
-                os.makedirs(self._full_path())
+                os.mkdir(self._full_path())
             else:
                 raise Exception("Directory already exists")
 
