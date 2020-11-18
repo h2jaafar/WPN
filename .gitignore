@@ -196,11 +196,15 @@ src/resources/maps/house_10/9.pickle
 .vscode/launch.json
 gui_config.pickle
 src/pb_workspace.code-workspace
-src/resources/maps/
 src/resources/vin_maps/
 src/resources/training_data/
 
-src/resources/maps/
+src/resources/maps/house_10000/
+src/resources/maps/64_uniform_random_fill_10000/
+src/resources/maps/64_house_10000/
+src/resources/maps/64_block_map_10000/
+src/resources/maps/uniform_random_fill_5000/
+src/resources/maps/house_5000/
 src/resources/results/
 src/resources/algorithms/
 src/resources/screenshots/

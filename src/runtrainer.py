@@ -33,7 +33,7 @@ from algorithms.lstm.a_star_waypoint import WayPointNavigation
 from algorithms.lstm.combined_online_LSTM import CombinedOnlineLSTM
 from algorithms.lstm.LSTM_CAE_tile_by_tile import CAE,LSTMCAEModel
 
-
+from algorithms.vin.vin import VINTest
 # planner testing
 from algorithms.basic_testing import BasicTesting
 from algorithms.classic.testing.a_star_testing import AStarTesting
@@ -57,15 +57,15 @@ maps = {
     "House": ("house_10/6", True),
     "Long Wall": (Maps.grid_map_labyrinth2, True),
     "Labyrinth": (Maps.grid_map_labyrinth, True),
-    
+    "House_8x8": ("8_test_maps/house_1500/6",True),
     "Small Obstacle": (Maps.grid_map_one_obstacle.convert_to_dense_map(), True),
     "SLAM Map 1": ("map10", False),
     "SLAM Map 1 (compressed)": ("map11", True),
     "SLAM Map 2": ("map14", False),
     "SLAM Map 3": ("map12", False),
-    "House Expo Sample": ("_house_expo/10",False),
+    "House Expo Sample": ("_house_expo_100/18",True),
     "Block 8x8": ('block_map_100/20',True),
-    "Block testing": ('block_map_100/0',True)
+    "Block testing": ('block_map_100/0',False)
 
     }
 
@@ -89,6 +89,7 @@ algorithms = {
     "Dijkstra": (Dijkstra, DijkstraTesting, ([], {})),
     "Bug1": (Bug1, BasicTesting, ([], {})),
     "Bug2": (Bug2, BasicTesting, ([], {})),
+    "VIN": (VINTest, BasicTesting, ([], {})),
 }
 
 animations = {
@@ -125,18 +126,18 @@ labelling = {
 
 
 #Input hyperparametres here 
-chosen_map = 'Uniform Random Fill'
-algo = algorithms['RRT*'] #Choose which planner 
+chosen_map = 'House Expo Sample'
+algo = algorithms['VIN'] #Choose which planner 
 ani = animations['Fast'] #Choose animation speed
 debug = debug['High'] #Choose debug level 
 training_algo = BasicLSTMModule #Chooses the algorithm to train, either CAE, BasicLSTMModule,LSTMCAEModel
 nbr_ex = 15000 #Number of maps generated
 show_sample_map = False #shows 5 samples
-gen_start = True
+gen_start = False
 train_start = False 
-sim_start = False
+sim_start = True
 analyzer_start = False
-config.generator_house_expo = True
+config.generator_house_expo = False
 config.generator_size = 64 # Change the size of the maps generated
 
 

@@ -34,6 +34,7 @@ from algorithms.configuration.configuration import Configuration
 from algorithms.lstm.LSTM_tile_by_tile import OnlineLSTM
 from algorithms.lstm.a_star_waypoint import WayPointNavigation
 from algorithms.lstm.combined_online_LSTM import CombinedOnlineLSTM
+from algorithms.vin.vin import VINTest
 #Pathreader debugging tool
 from algorithms.pathreader import PathReader
 
@@ -51,20 +52,21 @@ class GUI:
         "SLAM Map 1 (compressed)": ("map11", True),
         "SLAM Map 2": ("map14", False),
         "SLAM Map 3": ("map12", False),
-
-
+        "House Expo Sample": ("_house_expo_100/18",True),
+        "House_8x8": ("8_test_maps/house_1500/6",True),
 
         }
 
 
     __algorithms = {
         "A*": (AStar, AStarTesting, ([], {})),
-        "WPN1":(WayPointNavigation, WayPointNavigationTesting, ([], {"global_kernel_max_it": 20, "global_kernel": (CombinedOnlineLSTM, ([], {}))})),
-        "WPN2 (LSTM) ":(WayPointNavigation, WayPointNavigationTesting, ([], {"global_kernel_max_it": 20, "global_kernel": (OnlineLSTM, ([], {"load_name": "tile_by_tile_training_uniform_random_fill_10000_block_map_10000_house_10000_model"}))})),
-        "WPN3 (CAE)": (WayPointNavigation, WayPointNavigationTesting, ([], {"global_kernel_max_it": 20, "global_kernel": (OnlineLSTM, ([], {"load_name": "caelstm_section_lstm_training_block_map_10000_model"}))})),
+        "WPN":(WayPointNavigation, WayPointNavigationTesting, ([], {"global_kernel_max_it": 20, "global_kernel": (CombinedOnlineLSTM, ([], {}))})),
+        "WPN-view ":(WayPointNavigation, WayPointNavigationTesting, ([], {"global_kernel_max_it": 20, "global_kernel": (OnlineLSTM, ([], {"load_name": "tile_by_tile_training_uniform_random_fill_10000_block_map_10000_house_10000_model"}))})),
+        "WPN3-map": (WayPointNavigation, WayPointNavigationTesting, ([], {"global_kernel_max_it": 20, "global_kernel": (OnlineLSTM, ([], {"load_name": "caelstm_section_lstm_training_block_map_10000_model"}))})),
         "LSTM Bagging": (CombinedOnlineLSTM, CombinedOnlineLSTMTesting, ([], {})),
         "Map Module (CAE) ": (OnlineLSTM, BasicTesting, ([], {"load_name": "caelstm_section_lstm_training_uniform_random_fill_10000_block_map_10000_model"})),
         "View Module (Online LSTM)": (OnlineLSTM, BasicTesting, ([], {"load_name": "tile_by_tile_training_uniform_random_fill_10000_block_map_10000_house_10000_model"})),
+        "VIN": (VINTest, BasicTesting, ([], {})),
         "SPRM": (SPRM, BasicTesting, ([], {})),
         "RT": (RT, BasicTesting, ([], {})),
         "RRT": (RRT, BasicTesting, ([], {})),
@@ -75,6 +77,7 @@ class GUI:
         "Bug1": (Bug1, BasicTesting, ([], {})),
         "Bug2": (Bug2, BasicTesting, ([], {})),
         "Path Reader": (PathReader, BasicTesting, ([], {})),
+        
     }
 
     __animations = {

@@ -2,7 +2,7 @@
 [![coverage report](https://gitlab.doc.ic.ac.uk/ait15/individual-project/badges/master/coverage.svg)](https://gitlab.doc.ic.ac.uk/ait15/individual-project/commits/master)
 
 ## Introduction
-Waypoint Planning Networks (WPN) is a hybrid planning algorithm, submitted to the ICRA2021 conference. For more specifics about the algorithm, please see the paper. This repository is a combination of WPN algorithm, its varients, and PathBench, a benchmarking framework with support for machine learning algorithms. 
+Waypoint Planning Networks (WPN) is a hybrid planning algorithm, submitted to the ICRA2021 conference. For more specifics about the algorithm, please see the paper. This repository is a combination of WPN algorithm, it's varients, and PathBench, a benchmarking framework with support for machine learning algorithms. 
 
 ## PathBench
 
