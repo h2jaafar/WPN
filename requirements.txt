@@ -14,7 +14,7 @@ cffi==1.14.2
 constantly==15.1.0
 controller-manager==0.18.2
 controller-manager-msgs==0.18.2
-cryptography==3.1
+cryptography==3.2
 cv-bridge==1.13.0
 cycler==0.10.0
 diagnostic-analysis==1.9.7
