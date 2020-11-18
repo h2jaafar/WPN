@@ -1,14 +1,36 @@
 # Waypoint Planning Networks (WPN)
 [![coverage report](https://gitlab.doc.ic.ac.uk/ait15/individual-project/badges/master/coverage.svg)](https://gitlab.doc.ic.ac.uk/ait15/individual-project/commits/master)
 
-## Introduction
-Waypoint Planning Networks (WPN) is a hybrid planning algorithm, submitted to the ICRA2021 conference. For more specifics about the algorithm, please see the paper. This repository is a combination of WPN algorithm, it's varients, and PathBench, a benchmarking framework with support for machine learning algorithms. 
+## Introduction - WPN
+Waypoint Planning Networks (WPN) is a hybrid planning algorithm, submitted to the ICRA2021 conference. WPN, a hybrid algorithm based on LSTMs with a local kernel—a classic algorithm such as A*, and a global kernel using a learned algorithm. WPN produces a more computationally efficient and robust solution. Experimental results outline the benefits of WPN, both in efficiency and generalization. It is shown that WPN’s search space is considerably less than A*, while being able to generate near optimal results. Additionally, WPN works on partial maps, unlike A* which needs the full map in advance. This repository is a combination of WPN algorithm, it's varients, and PathBench, a benchmarking framework with support for machine learning algorithms.
+
+<br />
+<img src="./readme_files/astar_figure.png" width="1500">
+
+
 
 ## PathBench
 
 PathBench is a motion planning platform used to develop, assess, compare and visualise the performance
 and behaviour of path planners. The platform is split into four main components:
 Simulator, Generator, Trainer and Analyzer.
+
+Further PathBench architecture is described below the quick start guide. 
+
+### Quick Start Guide
+To test WPN for yourself, simply follow these instructions. 
+1. Clone this repository, using <br />
+```git clone https://github.com/husseinalijaafar/WPN.```
+2. `cd` to `PathBench/` and run <br> `pip install -r requirements.txt`
+3. `cd` to `PathBench/src/` and run:
+`
+python3 main_gui.py
+`
+4. Select from the simulator dropdowns the algorithm, maps, and debug level you require. Then simply run, and the simulator window will pop up. 
+
+If you encounter any issues, please feel free to email me at, <husseinali.jaafar@ryerson.ca>.
+
+For more commands and common, see below. 
 
 **Simulator**
 
