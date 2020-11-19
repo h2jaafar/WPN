@@ -21,8 +21,8 @@ Further PathBench architecture is described below the quick start guide.
 To test WPN for yourself, simply follow these instructions. 
 1. Clone this repository, using <br />
 ```git clone https://github.com/husseinalijaafar/WPN.```
-2. `cd` to `PathBench/` and run <br> `pip install -r requirements.txt`
-3. `cd` to `PathBench/src/` and run:
+2. `cd` to `WPN/` and run <br> `pip install -r requirements.txt`
+3. `cd` to `WPN/src/` and run:
 `
 python3 main_gui.py
 `
