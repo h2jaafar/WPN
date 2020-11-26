@@ -8,7 +8,9 @@ Waypoint Planning Networks (WPN) is a hybrid planning algorithm, submitted to th
 <img src="./readme_files/astar_figure.png" width="1500">
 
 You can watch the submission video here (this will open a new tab):
-[![Watch the video](./readme_files/wpn_thumbnail.png)](https://youtu.be/e_enK3SkHU4)
+<a href="https://youtu.be/e_enK3SkHU4"> <img border="0" alt="Watch the video" src="./readme_files/wpn_thumbnail.png" width="1500">
+</a>
+
 
 ## PathBench
 
