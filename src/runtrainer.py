@@ -135,8 +135,8 @@ nbr_ex = 15000 #Number of maps generated
 show_sample_map = False #shows 5 samples
 gen_start = False
 train_start = False 
-sim_start = True
-analyzer_start = False
+sim_start = False
+analyzer_start = True
 config.generator_house_expo = False
 config.generator_size = 64 # Change the size of the maps generated
 

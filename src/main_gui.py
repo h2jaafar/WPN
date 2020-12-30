@@ -221,6 +221,8 @@ For additional commands please check the simulator log (debug level >= Basic)"""
         debug_label.pack(side=LEFT, padx=5, pady=5)
         debug_option.pack(side=LEFT, padx=5, pady=5)
 
+        
+
         sim_start_button.pack(pady=10)
 
         self.__window.update()

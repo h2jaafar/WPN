@@ -14,7 +14,19 @@ You can watch the submission video here (Right click, and open in new tab):
 <a href="https://youtu.be/e_enK3SkHU4"
 target="_blank"><img src="./readme_files/wpn_thumbnail.png"></a>
 
+## Hardware
+It is recommended that you have a capable system with a GPU. For the paper, the following hardware was used:
 
+**For Table 1**
+
+Intel Core i7-6500U CPU @ 2.50GHz × 4  w/ 12GB RAM <br>
+Nvidia GeForce 940M GPU
+<img src="./readme_files/table1.png" width="1400">
+
+**For Table 2** <br>
+Intel Silver 4216 Cascade Lake @ 2.1GHz x 32 cores w/ 128GB RAM<br>
+Nvidia V100 Volta GPU <br>
+<img src="./readme_files/table2.png" width="500">
 
 ## PathBench
 
