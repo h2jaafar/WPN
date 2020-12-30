@@ -124,7 +124,7 @@ class CombinedOnlineLSTM(Algorithm):
             
             # parallel_backend('multiprocessing')
             t1 = time.time()
-            Parallel(n_jobs=4, prefer='threads', batch_size = "auto", verbose=50)(delayed(self.non_pickle_kernels_cal)(kernel_tuple) for kernel_tuple in kernels)
+            Parallel(n_jobs=4, prefer='threads')(delayed(self.non_pickle_kernels_cal)(kernel_tuple) for kernel_tuple in kernels)
             t2 = time.time()
             # print('Elapsed time', t2-t1)
             kernels_fake = [(0,1), (1,2), (2,3), (3,4), (4,5), (5,6), (6,7), (7,8) ]

@@ -420,8 +420,10 @@ class Analyzer:
         self.__analysis_stream = StringIO()
         maps: List[Map] = []
 
-        for i in range(30):
-            maps.append("8_test_maps/house_1500/" + str(i))
+        for i in range(50):
+            maps.append("28_test_maps/house_1500/" + str(i))
+            maps.append("28_test_maps/uniform_random_fill_1500/" + str(i))
+
             # maps.append("_house_expo/" + str(i))
             # maps.append("16_test_maps/uniform_random_fill_1500/" + str(i))
             # maps.append("16_test_maps/house_1500/" + str(i))
@@ -445,6 +447,7 @@ class Analyzer:
             #(WayPointNavigation, WayPointNavigationTesting, ([], {"global_kernel_max_it": 20, "global_kernel": (OnlineLSTM, ([], {"load_name": "caelstm_section_lstm_training_block_map_10000_model"}))})),
             #(WayPointNavigation, WayPointNavigationTesting, ([], {"global_kernel_max_it": 20, "global_kernel": (OnlineLSTM, ([], {"load_name": "tile_by_tile_training_uniform_random_fill_10000_block_map_10000_house_10000_model"}))})),
             #(WayPointNavigation, WayPointNavigationTesting, ([], {"global_kernel_max_it": 20, "global_kernel": (CombinedOnlineLSTM, ([], {}))})),
+            (WayPointNavigation, WayPointNavigationTesting, ([], {"global_kernel_max_it": 20, "global_kernel": (CombinedOnlineLSTM, ([], {}))})),
         ]
         
         '''
@@ -476,7 +479,7 @@ class Analyzer:
             #"Bagging - Combined Online LSTM (proposed solution)",
             #"WayPointNavigation with local kernel: A* and global kernel: CAE Online LSTM on block_map_10000 (paper solution)",
             #"WayPointNavigation with local kernel: A* and global kernel: Online LSTM on uniform_random_fill_10000_block_map_10000_house_10000 (paper solution)",
-            #"WayPointNavigation with local kernel: A* and global kernel: Combined Online LSTM (proposed solution)",
+            "WayPointNavigation with local kernel: A* and global kernel: Combined Online LSTM (proposed solution)",
         ]
         
         '''
