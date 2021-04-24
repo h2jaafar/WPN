@@ -1,7 +1,7 @@
 actionlib==1.12.1
 angles==1.9.12
 attrs==20.2.0
-autobahn==20.7.1
+autobahn==20.12.3
 Automat==20.2.0
 base-local-planner==1.16.7
 bondpy==1.8.5
