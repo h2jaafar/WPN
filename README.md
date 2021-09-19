@@ -39,6 +39,11 @@ Feel free to check out the newer version of PathBench here:
 [PathBench 3D](https://github.com/perfectly-balanced/PathBench).
 
 That repo also contains an updated WPN model, trained on 45k maps. 
+### CNPP and VIN
+Two algorithms, CNPP and VIN, compared in the paper against WPN are not present in this repo.
+To access those implementations, please see:
+[CNPP](https://github.com/husseinalijaafar/pb-cnpp)
+[VIN](https://github.com/husseinalijaafar/pb-value-iteration-networks)
 
 Further PathBench architecture is described below the quick start guide. 
 
