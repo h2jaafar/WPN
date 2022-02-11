@@ -150,7 +150,7 @@ tk-tools==0.13.0
 topic-tools==1.14.9
 torch==1.6.0
 torchvision==0.7.0
-Twisted==20.3.0
+Twisted==22.1.0
 txaio==20.4.1
 urdfdom-py==0.4.3
 xacro==1.13.8
