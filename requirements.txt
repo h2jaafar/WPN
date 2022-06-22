@@ -52,7 +52,7 @@ message-filters==1.14.9
 multiprocess==0.70.10
 natsort==7.0.1
 nmea-navsat-driver==0.5.2
-numpy==1.19.1
+numpy==1.22.0
 pandas==1.1.1
 pathos==0.2.6
 Pillow==9.0.1
