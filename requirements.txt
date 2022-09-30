@@ -39,7 +39,7 @@ idna==2.10
 image-geometry==1.13.0
 incremental==17.5.0
 interactive-markers==1.11.5
-joblib==0.16.0
+joblib==1.2.0
 joint-state-publisher==1.12.15
 joint-state-publisher-gui==1.12.15
 kdl-parser-py==1.13.1
